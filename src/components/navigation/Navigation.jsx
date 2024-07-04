@@ -226,7 +226,7 @@ export default function Navigation({ children, setThemeMode, currentTheme }) {
                 </IconButton>
               )}
             </Tooltip> */}
-            <Stack direction="row" spacing={2}>
+            <Stack direction="row" spacing={1} justifyContent='center' alignItems='center'>
               {/* <Tooltip title="Set Theme">
               {currentTheme ? (
                 <IconButton onClick={() => setThemeMode(!currentTheme)}>
@@ -259,7 +259,9 @@ export default function Navigation({ children, setThemeMode, currentTheme }) {
                       color: "primary.main",
                       fontWeight: "bolder",
                       border: 1,
-                      borderColor: "lightgray"
+                      borderColor: "lightgray",
+                      width: 30,
+                      height: 30
                     }}
                   >
                     {data?.firstName?.charAt(0)}
