@@ -172,7 +172,7 @@ const LoginUser = () => {
                             sx={{ fontWeight: "bolder", width: "100%" }}
                             onClick={() => navigate("/register")}
                           >
-                            Rigister
+                            Register
                           </Button>
                         </Grid>
                         <Grid item xs={12} md={6}>
