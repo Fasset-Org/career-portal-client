@@ -123,7 +123,7 @@ const Home = () => {
               sx={{ fontWeight: "bolder" }}
               onClick={() => navigate('/register')}
             >
-              Rigister
+              Register
             </Button>
             <Button
               variant="outlined"
