@@ -285,7 +285,7 @@ export default function Navigation({ children, setThemeMode, currentTheme }) {
                     sx={{ fontWeight: "bolder" }}
                     onClick={() => navigate("/register")}
                   >
-                    Rigister
+                    Register
                   </Button>
                 </>
               )}
