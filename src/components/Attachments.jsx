@@ -24,9 +24,7 @@ const Attachments = () => {
     }
   });
 
-  
 
-  let documentOptions = [];
 
   if (isLoading) {
     return <LinearProgress />;
