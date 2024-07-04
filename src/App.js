@@ -1,6 +1,10 @@
 // import "./App.css";
 import Navigation from "./components/navigation/Navigation";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import {
+  Route,
+  BrowserRouter as Router,
+  Routes
+} from "react-router-dom";
 import Home from "./pages/Home";
 import { ThemeProvider } from "@emotion/react";
 import { themeDark, themeLight } from "./theme";
@@ -34,14 +38,14 @@ function App() {
         <Router>
           <Navigation setThemeMode={setThemeMode} currentTheme={themeMode}>
             <Routes>
+              <Route path="/home" element={<Home />} />
+              <Route path="/login" element={<LoginUser />} />
+              <Route path="/register" element={<RegisterUser />} />
+
               <Route path="/" element={<PrivateRoute />}>
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/profile" element={<StudentsHome />} />
               </Route>
-
-              <Route path="/home" element={<Home />} />
-              <Route path="/login" element={<LoginUser />} />
-              <Route path="/register" element={<RegisterUser />} />
             </Routes>
           </Navigation>
         </Router>
