@@ -45,6 +45,25 @@ const AddEditAttachmentModal = ({ attachment, userId }) => {
     }
   });
 
+  const documentOptionsTemplate = [
+    {
+      value: "Matric Certificate",
+      label: "Matric Certificate"
+    },
+    {
+      value: "Qualification",
+      label: "Qualification"
+    },
+    {
+      value: "Id Document",
+      label: "Id Document"
+    },
+    {
+      value: "Other",
+      label: "Other"
+    }
+  ];
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -142,55 +161,49 @@ const AddEditAttachmentModal = ({ attachment, userId }) => {
             }}
             validationSchema={Yup.object().shape({
               documentName: Yup.string().required("Document name required"),
+              otherName: Yup.string().when("documentName", {
+                is: "Other",
+                then: () => Yup.string().required("Document name required")
+              }),
               file: Yup.string().required("File required")
             })}
             onSubmit={(values) => {
               const formData = new FormData();
               for (const [key, value] of Object.entries(values)) {
-                formData.append(key, value);
+                if (key === "documentName" && value === "Other") {
+                  formData.append(key, values.otherName);
+                } else {
+                  formData.append(key, value);
+                }
               }
 
               addDocumentMutation.mutate(formData);
             }}
             enableReinitialize={true}
           >
-            {(formik) => {
+            {({ values }) => {
               return (
                 <Form>
                   <Grid container spacing={2}>
-                    <Grid item xs={12} md={6}>
-                      <InputLabel sx={{ mb: 1 }}>Document Name</InputLabel>
-                      {attachment ? (
+                    {values.documentName === "Other" ? (
+                      <Grid item xs={12} md={6}>
+                        <InputLabel sx={{ mb: 1 }}>Document Name</InputLabel>
+                        <TextFieldWrapper
+                          name="otherName"
+                          label="Document Name"
+                        />
+                      </Grid>
+                    ) : (
+                      <Grid item xs={12} md={6}>
+                        <InputLabel sx={{ mb: 1 }}>Document Name</InputLabel>
                         <SelectFieldWrapper
                           name="documentName"
                           label="Document Name"
-                          options={[
-                            {
-                              value: "Matric Certificate",
-                              label: "Matric Certificate"
-                            },
-                            {
-                              value: "Qualification",
-                              label: "Qualification"
-                            },
-                            {
-                              value: "Id Document",
-                              label: "Id Document"
-                            }
-                            // {
-                            //   value: "Certificate & Training",
-                            //   label: "Certificate & Training"
-                            // }
-                          ]}
+                          options={documentOptionsTemplate}
                           disabled={attachment && true}
                         />
-                      ) : (
-                        <TextFieldWrapper
-                          name="documentName"
-                          label="Document Name"
-                        />
-                      )}
-                    </Grid>
+                      </Grid>
+                    )}
                     <Grid item xs={12} md={6}>
                       <InputLabel sx={{ mb: 1 }}>File</InputLabel>
                       <Field name="file">
