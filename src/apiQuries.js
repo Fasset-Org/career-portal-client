@@ -26,6 +26,12 @@ const ApiQueries = {
     return data;
   },
 
+  logoutUser: async () => {
+    const { data } = await axiosInstance(`/auth/logout`);
+
+    return data?.resp;
+  },
+
   userInfo: async () => {
     const resp = await axiosInstance.get(`/auth/isUserLoggedIn`);
 
