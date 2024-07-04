@@ -66,7 +66,7 @@ const RegisterUser = () => {
             </Alert>
           )}
           {isSuccess && (
-            <Alert severity="error" color="error" sx={{ m: 2, width: "100%" }}>
+            <Alert severity="error" sx={{ m: 2, width: "100%" }}>
               {data.message}{" "}
             </Alert>
           )}
