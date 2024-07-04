@@ -24,45 +24,9 @@ const Attachments = () => {
     }
   });
 
-  const documentOptionsTemplate = [
-    {
-      value: "Matric Certificate",
-      label: "Matric Certificate"
-    },
-    {
-      value: "Qualification",
-      label: "Qualification"
-    },
-    {
-      value: "Id Document",
-      label: "Id Document"
-    }
-  ];
+  
 
   let documentOptions = [];
-
-  if (data?.attachments?.length > 0) {
-    // let documentNewOptions = [];
-    documentOptions = data?.attachments?.map((attachment, i) => {
-      return attachment.documentName === documentOptionsTemplate[i].value
-        ? {
-            value: attachment.documentName,
-            label: attachment.documentName,
-            fileName: attachment.originalFileName
-          }
-        : {
-            value: attachment.documentName,
-            label: attachment.documentName,
-            fileName: attachment.originalFileName
-          };
-    });
-  } else {
-    documentOptions = [...documentOptionsTemplate];
-  }
-
-  console.log(data);
-
-  console.log(documentOptions);
 
   if (isLoading) {
     return <LinearProgress />;
@@ -122,30 +86,26 @@ const Attachments = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {documentOptions.map((document, i) => {
+            {data?.attachments?.map((document, i) => {
               return (
-                <TableRow key={document.value}>
+                <TableRow key={document.id}>
                   <TableCell align="center" component="th" scope="row">
                     {i + 1}
                   </TableCell>
                   <TableCell align="center" component="th" scope="row">
-                    {document.label}
+                    {document.documentName}
                   </TableCell>
                   <TableCell align="center">
-                    {document?.fileName ? (
-                      <Link sx={{ textDecoration: "none", cursor: "pointer" }}>
-                        {document?.fileName}
-                      </Link>
-                    ) : (
-                      "-"
-                    )}
+                    <Link sx={{ textDecoration: "none", cursor: "pointer" }}>
+                      {document?.originalFileName}
+                    </Link>
                   </TableCell>
                   <TableCell align="center">
                     <Stack direction="row" spacing={2} justifyContent="center">
-                      <AddEditAttachmentModal
+                      {/* <AddEditAttachmentModal
                         attachment={document}
                         userId={data?.id}
-                      />
+                      /> */}
                       {/* <Tooltip title="Download">
                         <Button
                           onClick={() => {
