@@ -33,6 +33,7 @@ const LoginUser = () => {
       localStorage.setItem("token", data.user.token);
 
       window.location.href = `${process.env.REACT_APP_PUBLIC_URL}/dashboard`;
+      // window.location.reload();
     },
     onError: (err) => {
       console.log(err);
@@ -100,7 +101,7 @@ const LoginUser = () => {
                     .email("Please prodive a valid email format"),
                   password: Yup.string()
                     .required("Password required")
-                    .min(8, "At least 8 characters required for password")
+                    // .min(8, "At least 8 characters required for password")
                 })}
                 onSubmit={(values) => {
                   mutate(values);
