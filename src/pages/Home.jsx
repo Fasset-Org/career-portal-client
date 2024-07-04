@@ -8,8 +8,7 @@ import LoginIcon from "@mui/icons-material/Login";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   // const { data } = useQuery({
   //   queryKey: ["userInfo"],
@@ -111,7 +110,7 @@ const Home = () => {
               color="primary"
               endIcon={<LoginIcon />}
               sx={{ fontWeight: "bolder" }}
-              onClick={() => navigate('/login')}
+              onClick={() => navigate("/login")}
             >
               Login
             </Button>
@@ -121,7 +120,7 @@ const Home = () => {
               // color="warning"
               endIcon={<AppRegistrationIcon />}
               sx={{ fontWeight: "bolder" }}
-              onClick={() => navigate('/register')}
+              onClick={() => navigate("/register")}
             >
               Register
             </Button>
