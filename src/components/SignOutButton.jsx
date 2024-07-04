@@ -7,11 +7,11 @@ import {
   DialogContent,
   DialogTitle,
   IconButton,
-  Typography,
+  Typography
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-import LogoutIcon from '@mui/icons-material/Logout';
+import LogoutIcon from "@mui/icons-material/Logout";
 import Tooltip from "@mui/material/Tooltip";
 
 /**
@@ -19,26 +19,15 @@ import Tooltip from "@mui/material/Tooltip";
  */
 export const SignOutButton = () => {
   const navigate = useNavigate();
-
-
-  // const { instance } = useMsal();
+  const [open, setOpen] = React.useState(false);
 
   const handleLogout = () => {
-    // if (logoutType === "popup") {
-
-    // instance.logoutPopup({
-    //   postLogoutRedirectUri: "/",
-    //   mainWindowRedirectUri: "/",
-    // });
-
-    localStorage.removeItem("userInfo");
+    localStorage.removeItem("token");
     sessionStorage.clear();
 
-    navigate("/");
+    navigate("/home");
     window.location.reload();
   };
-
-  const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -55,7 +44,8 @@ export const SignOutButton = () => {
           color="error"
           size="large"
           aria-label="logout"
-          onClick={handleClickOpen}>
+          onClick={handleClickOpen}
+        >
           <LogoutIcon />
         </IconButton>
       </Tooltip>
@@ -66,27 +56,33 @@ export const SignOutButton = () => {
         fullWidth
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description">
+        aria-describedby="alert-dialog-description"
+      >
         <DialogTitle id="alert-dialog-title">Logout</DialogTitle>
         <DialogContent>
           <Typography
             variant="h6"
             sx={{
               fontWeight: "fontWeightBold",
-              color: "text.primary",
-            }}>
+              color: "text.primary"
+            }}
+          >
             Are you sure you want to logout?
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} variant="contained"> Cancel</Button>
+          <Button onClick={handleClose} variant="contained">
+            {" "}
+            Cancel
+          </Button>
           <Button
             color="error"
             variant="outlined"
             onClick={() => {
               handleLogout("redirect");
             }}
-            autoFocus>
+            autoFocus
+          >
             Logout
           </Button>
         </DialogActions>
