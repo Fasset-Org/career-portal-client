@@ -12,24 +12,23 @@ import {
 } from "@mui/material";
 import React from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { CheckBox } from "@mui/icons-material";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 
 const LearnerProgrammes = () => {
-  const [selectedInterest, setSelectedInterest] = React.useState();
+  // const [selectedInterest, setSelectedInterest] = React.useState();
   const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
   const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-  const handleChange = (event) => {
-    const {
-      target: { value }
-    } = event;
-    setSelectedInterest(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
-  };
+  // const handleChange = (event) => {
+  //   const {
+  //     target: { value }
+  //   } = event;
+  //   setSelectedInterest(
+  //     // On autofill we get a stringified value.
+  //     typeof value === "string" ? value.split(",") : value
+  //   );
+  // };
 
   const leanerInterventions = [
     {
@@ -163,7 +162,7 @@ const LearnerProgrammes = () => {
           multiple
           options={leanerInterventions}
           onChange={(e, value) => {
-            setSelectedInterest(value);
+            // setSelectedInterest(value);
           }}
           disableCloseOnSelect
           getOptionLabel={(option) => option.label}
