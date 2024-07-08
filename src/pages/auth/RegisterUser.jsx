@@ -16,6 +16,7 @@ import ApiQueries from "../../apiQuries";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import LoginIcon from "@mui/icons-material/Login";
 import bgImg from "../../images/Untitled-2.bcecf2a1201a8f598c47.png";
+import blueLogo from "../../images/blueLogo-transparentBg.png";
 
 const RegisterUser = () => {
   const navigate = useNavigate();
@@ -43,7 +44,6 @@ const RegisterUser = () => {
       sx={{ backgroundColor: "#FFFFFF" }}
     >
       <Stack
-        spacing={2}
         width={{ md: "50%", xs: "100%" }}
         sx={{ minHeight: "86vh" }}
         alignItems="center"
@@ -60,6 +60,17 @@ const RegisterUser = () => {
             {data.message}{" "}
           </Alert>
         )}
+
+<Stack height={150} alignItems="center" padding={2}>
+          <img src={blueLogo} alt="" height="100%" width="100%" />
+        </Stack>
+
+        <Typography fontSize={20} fontWeight="bolder">
+          Welcome
+        </Typography>
+        <Typography fontWeight="bolder" sx={{ color: "primary.main" }}>
+          Register in to continue to Learner Portal
+        </Typography>
 
         <Grid container>
           <Grid item xs={12} md={12}>
@@ -141,7 +152,7 @@ const RegisterUser = () => {
                   <Form>
                     {isLoading && <LinearProgress />}
 
-                    <Stack alignItems="center">
+                    {/* <Stack alignItems="center">
                       <Typography
                         fontWeight="bolder"
                         fontSize={30}
@@ -150,7 +161,7 @@ const RegisterUser = () => {
                       >
                         Register
                       </Typography>
-                    </Stack>
+                    </Stack> */}
 
                     <Grid container padding={2} spacing={2}>
                       <Grid item xs={12} md={6}>
