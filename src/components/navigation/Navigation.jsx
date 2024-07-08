@@ -14,7 +14,15 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { Button, Stack, Tooltip, styled } from "@mui/material";
+import {
+  Button,
+  Menu,
+  MenuItem,
+  Stack,
+  Tooltip,
+  styled,
+  useMediaQuery
+} from "@mui/material";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import LoginIcon from "@mui/icons-material/Login";
 import { SignOutButton } from "../SignOutButton";
@@ -30,6 +38,8 @@ import Avatar from "@mui/material/Avatar";
 import { useNavigate } from "react-router-dom";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
+import { useTheme } from "@mui/material/styles";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open"
 })(({ theme, open }) => ({
@@ -119,6 +129,16 @@ const Drawer = styled(MuiDrawer, {
 
 export default function Navigation({ children, setThemeMode, currentTheme }) {
   const navigate = useNavigate();
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const openMenu = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const { data } = useQuery({
     queryKey: ["userInfo"],
@@ -226,7 +246,12 @@ export default function Navigation({ children, setThemeMode, currentTheme }) {
                 </IconButton>
               )}
             </Tooltip> */}
-            <Stack direction="row" spacing={1} justifyContent='center' alignItems='center'>
+            <Stack
+              direction="row"
+              spacing={1}
+              justifyContent="center"
+              alignItems="center"
+            >
               {/* <Tooltip title="Set Theme">
               {currentTheme ? (
                 <IconButton onClick={() => setThemeMode(!currentTheme)}>
@@ -268,7 +293,7 @@ export default function Navigation({ children, setThemeMode, currentTheme }) {
                   </Avatar>
                   <SignOutButton />
                 </>
-              ) : (
+              ) : isDesktop ? (
                 <>
                   <Button
                     variant="contained"
@@ -289,6 +314,68 @@ export default function Navigation({ children, setThemeMode, currentTheme }) {
                   >
                     Register
                   </Button>
+                </>
+              ) : (
+                <>
+                  <IconButton onClick={handleClick}>
+                    <MoreVertIcon />
+                  </IconButton>
+
+                  <Menu
+                    anchorEl={anchorEl}
+                    id="account-menu"
+                    open={openMenu}
+                    onClose={handleClose}
+                    onClick={handleClose}
+                    PaperProps={{
+                      elevation: 0,
+                      sx: {
+                        overflow: "visible",
+                        filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                        mt: 1.5,
+                        "& .MuiAvatar-root": {
+                          width: 32,
+                          height: 32,
+                          ml: -0.5,
+                          mr: 1
+                        },
+                        "&::before": {
+                          content: '""',
+                          display: "block",
+                          position: "absolute",
+                          top: 0,
+                          right: 14,
+                          width: 10,
+                          height: 10,
+                          bgcolor: "background.paper",
+                          transform: "translateY(-50%) rotate(45deg)",
+                          zIndex: 0
+                        }
+                      }
+                    }}
+                    transformOrigin={{ horizontal: "right", vertical: "top" }}
+                    anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+                  >
+                    <MenuItem onClick={handleClose}>
+                      <Button
+                        endIcon={<LoginIcon />}
+                        sx={{ fontWeight: "bolder" }}
+                        onClick={() => navigate("/login")}
+                      >
+                        Login
+                      </Button>
+                    </MenuItem>
+
+                    <MenuItem onClick={handleClose}>
+                      <Button
+                        endIcon={<AppRegistrationIcon />}
+                        sx={{ fontWeight: "bolder" }}
+                        onClick={() => navigate("/register")}
+                      >
+                        Register
+                      </Button>
+                    </MenuItem>
+                  </Menu>
                 </>
               )}
             </Stack>
