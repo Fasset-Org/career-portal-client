@@ -81,7 +81,7 @@ const LoginUser = () => {
         )}
 
         <Stack height={150} alignItems="center" padding={2}>
-          <img src={blueLogo} alt="" height="100%" width="100%" />
+          <img src={blueLogo} alt="" height={150} width={150} />
         </Stack>
 
         <Typography fontSize={20} fontWeight="bolder">
