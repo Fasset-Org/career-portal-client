@@ -2,7 +2,6 @@ import {
   // Alert,
   // AlertTitle,
   Box,
-  Button,
   Card,
   Divider,
   LinearProgress,
@@ -12,7 +11,6 @@ import {
   useTheme
 } from "@mui/material";
 import React from "react";
-import PublishIcon from "@mui/icons-material/Publish";
 import { useQuery } from "@tanstack/react-query";
 import ApiQueries from "../apiQuries";
 import EditLearnerBasicInformation from "./modals/EditLearnerBasicInformation";
@@ -88,7 +86,7 @@ const StudentsHome = () => {
               Student Profile
             </Typography> */}
             <Stack spacing={0.5} alignItems="center" justifyContent="center">
-              <Box sx={{height: 0, position: 'relative', bottom: 8, left: {md: 120, xs: 160}}}>
+              <Box sx={{height: 0, position: 'relative', bottom: 8, left: {md: 120, xs: 150}}}>
                 <EditLearnerBasicInformation userInfo={data} />
               </Box>
               {/* <img
@@ -192,7 +190,7 @@ const StudentsHome = () => {
           spacing={2}
           alignItems="end"
         >
-          {!useMediaQuery(theme.breakpoints.down("md")) && (
+          {/* {!useMediaQuery(theme.breakpoints.down("md")) && (
             <Button
               variant="contained"
               color="primary"
@@ -201,11 +199,11 @@ const StudentsHome = () => {
             >
               Submit Profile
             </Button>
-          )}
+          )} */}
 
           <LearnerInformation />
 
-          {useMediaQuery(theme.breakpoints.down("md")) && (
+          {/* {useMediaQuery(theme.breakpoints.down("md")) && (
             <Button
               variant="contained"
               color="primary"
@@ -214,7 +212,7 @@ const StudentsHome = () => {
             >
               Submit Profile
             </Button>
-          )}
+          )} */}
         </Stack>
       </Stack>
     </Box>
