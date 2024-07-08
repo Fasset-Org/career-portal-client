@@ -27,9 +27,9 @@ export const themeDark = createTheme({
     },
     MuiButton: {
       styleOverrides: {
-        root: {
-          height: 37
-        }
+        // root: {
+        //   height: 37
+        // }
       }
     },
     MuiTableHead: {
@@ -93,9 +93,9 @@ export const themeLight = createTheme({
     },
     MuiButton: {
       styleOverrides: {
-        root: {
-          height: 37
-        }
+        // root: {
+        //   height: 37
+        // }
       }
     },
     MuiAccordionSummary: {
