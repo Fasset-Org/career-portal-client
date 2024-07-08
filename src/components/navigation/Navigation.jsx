@@ -277,7 +277,7 @@ export default function Navigation({ children, setThemeMode, currentTheme }) {
                       </IconButton>
                     )}
                   </Tooltip>
-                  <Avatar
+                  {/* <Avatar
                     variant="circular"
                     sx={{
                       bgcolor: "#FFFFFF",
@@ -290,7 +290,7 @@ export default function Navigation({ children, setThemeMode, currentTheme }) {
                     }}
                   >
                     {data?.firstName?.charAt(0)}
-                  </Avatar>
+                  </Avatar> */}
                   <SignOutButton />
                 </>
               ) : isDesktop ? (
