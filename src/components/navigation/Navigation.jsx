@@ -496,7 +496,7 @@ export default function Navigation({ children, setThemeMode, currentTheme }) {
         </Drawer>
       )}
 
-      <Main open={open} sx={{ p: 0 }}>
+      <Main open={open} sx={{ p: 0, }}>
         {data?.userType !== "student" && <DrawerHeader />}
         {children}
       </Main>
