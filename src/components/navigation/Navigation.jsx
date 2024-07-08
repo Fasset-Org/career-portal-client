@@ -174,7 +174,7 @@ export default function Navigation({ children, setThemeMode, currentTheme }) {
         color="default"
         sx={{
           border: currentTheme && 1,
-          borderRadius: currentTheme ? 5 : 0,
+          borderRadius: 0, //currentTheme ? 5 : 0,
           width: "100%",
           backgroundColor: currentTheme && "#FFFFFF",
           borderColor: currentTheme && "lightgray",
