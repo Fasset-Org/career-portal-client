@@ -1,4 +1,5 @@
 import {
+  IconButton,
   LinearProgress,
   Link,
   Paper,
@@ -15,6 +16,7 @@ import React from "react";
 import AddEditAttachmentModal from "./modals/AddEditAttachmentModal";
 import { useQuery } from "@tanstack/react-query";
 import ApiQueries from "../apiQuries";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
 const Attachments = () => {
   const { data, isLoading } = useQuery({
@@ -23,8 +25,6 @@ const Attachments = () => {
       return ApiQueries.userInfo();
     }
   });
-
-
 
   if (isLoading) {
     return <LinearProgress />;
@@ -100,22 +100,9 @@ const Attachments = () => {
                   </TableCell>
                   <TableCell align="center">
                     <Stack direction="row" spacing={2} justifyContent="center">
-                      {/* <AddEditAttachmentModal
-                        attachment={document}
-                        userId={data?.id}
-                      /> */}
-                      {/* <Tooltip title="Download">
-                        <Button
-                          onClick={() => {
-                            // window.open(
-                            //   `${process.env.REACT_APP_API_URL}/student/downloadCertificate?filename=${certificate.certificateFileName}`,
-                            //   "_blank"
-                            // );
-                          }}
-                        >
-                          Download
-                        </Button>
-                      </Tooltip> */}
+                      <IconButton>
+                        <VisibilityIcon />
+                      </IconButton>
                     </Stack>
                   </TableCell>
                 </TableRow>
