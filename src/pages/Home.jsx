@@ -31,7 +31,11 @@ const Home = () => {
       padding={2}
       // sx={{ backgroundColor: "#FFFFFF" }}
     >
-      <Stack spacing={2} width={{ md: "50%", xs: "100%" }} paddingX={{md: 10, xs: 2}}>
+      <Stack
+        spacing={2}
+        width={{ md: "50%", xs: "100%" }}
+        paddingX={{ md: 10, xs: 2 }}
+      >
         <Typography
           fontSize={30}
           fontWeight="bolder"
@@ -95,7 +99,7 @@ const Home = () => {
           achieve more in your career, please register and complete your
           profile.
         </Typography>
-        <Stack spacing={2} direction="row">
+        <Stack spacing={2} direction={{ md: "row", xs: "column" }}>
           <Button
             variant="contained"
             color="primary"
@@ -134,11 +138,11 @@ const Home = () => {
           backgroundPositionY: "center",
           minHeight: "87vh",
           maxHeight: "110vh",
-          width: "50%",
+          width: "50%"
           // backgroundColor: "#FFFFFF"
         }}
         display={{ md: "block", xs: "none" }}
-        height={{md: 'auto', xs: 0}}
+        height={{ md: "auto", xs: 0 }}
       ></Stack>
     </Stack>
   );
