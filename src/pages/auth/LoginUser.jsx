@@ -18,7 +18,7 @@ import ApiQueries from "../../apiQuries";
 import bgImg from "../../images/Untitled-2.bcecf2a1201a8f598c47.png";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import LoginIcon from "@mui/icons-material/Login";
-
+import blueLogo from "../../images/blueLogo-transparentBg.png";
 const LoginUser = () => {
   const navigate = useNavigate();
 
@@ -60,12 +60,14 @@ const LoginUser = () => {
       sx={{ backgroundColor: "#FFFFFF" }}
     >
       <Stack
-        width={{md: '50%', xs: '100%'}}
-        spacing={2}
+        width={{ md: "50%", xs: "100%" }}
+        // spacing={2}
         alignItems="center"
         minHeight="86vh"
         justifyContent="center"
-        padding={{md: 10, xs: 4}}
+        paddingX={{ md: 5, xs: 4 }}
+        py={2}
+        
       >
         {error?.response?.status === 404 && (
           <Alert severity="error" color="error" sx={{ width: "100%" }}>
@@ -77,6 +79,17 @@ const LoginUser = () => {
             {data.message}
           </Alert>
         )}
+
+        <Stack height={150} alignItems="center" padding={2}>
+          <img src={blueLogo} alt="" height="100%" width="100%" />
+        </Stack>
+
+        <Typography fontSize={20} fontWeight="bolder">
+          Welcome back
+        </Typography>
+        <Typography fontWeight="bolder" sx={{ color: "primary.main" }}>
+          Login in to continue to Learner Portal
+        </Typography>
 
         <Grid container spacing={2}>
           <Grid item xs={12} md={12}>
@@ -101,7 +114,7 @@ const LoginUser = () => {
                   <Form>
                     {isLoading && <LinearProgress />}
 
-                    <Stack alignItems="center">
+                    {/* <Stack alignItems="center">
                       <Typography
                         fontWeight="bolder"
                         fontSize={30}
@@ -110,7 +123,7 @@ const LoginUser = () => {
                       >
                         Login
                       </Typography>
-                    </Stack>
+                    </Stack> */}
 
                     <Grid container spacing={2}>
                       <Grid item xs={12} md={12}>
@@ -195,7 +208,7 @@ const LoginUser = () => {
           width: "50%",
           backgroundColor: "#FFFFFF"
         }}
-        display={{md: 'block', xs: 'none'}}
+        display={{ md: "block", xs: "none" }}
       ></Stack>
     </Stack>
   );
