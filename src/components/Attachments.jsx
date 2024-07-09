@@ -1,4 +1,5 @@
 import {
+  Alert,
   IconButton,
   LinearProgress,
   Link,
@@ -51,66 +52,74 @@ const Attachments = () => {
         </Typography>
         <AddEditAttachmentModal userId={data?.id} />
       </Stack>
-      <TableContainer component={Paper}>
-        <Table aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell
-                align="center"
-                sx={{ fontWeight: "bolder", color: "#FFFFFF" }}
-              >
-                No#
-              </TableCell>
-              <TableCell
-                align="center"
-                sx={{ fontWeight: "bolder", color: "#FFFFFF" }}
-              >
-                Document Type
-              </TableCell>
+      {data?.attachments?.length > 0 ? (
+        <TableContainer component={Paper}>
+          <Table aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell
+                  align="center"
+                  sx={{ fontWeight: "bolder", color: "#FFFFFF" }}
+                >
+                  No#
+                </TableCell>
+                <TableCell
+                  align="center"
+                  sx={{ fontWeight: "bolder", color: "#FFFFFF" }}
+                >
+                  Document Type
+                </TableCell>
 
-              <TableCell
-                align="center"
-                sx={{ fontWeight: "bolder", color: "#FFFFFF" }}
-              >
-                FileName
-              </TableCell>
+                <TableCell
+                  align="center"
+                  sx={{ fontWeight: "bolder", color: "#FFFFFF" }}
+                >
+                  FileName
+                </TableCell>
 
-              <TableCell
-                align="center"
-                sx={{ fontWeight: "bolder", color: "#FFFFFF" }}
-              >
-                Action
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data?.attachments?.map((document, i) => {
-              return (
-                <TableRow key={document.id}>
-                  <TableCell align="center" component="th" scope="row">
-                    {i + 1}
-                  </TableCell>
-                  <TableCell align="center" component="th" scope="row">
-                    {document.documentName}
-                  </TableCell>
-                  <TableCell align="center">
-                    <Link sx={{ textDecoration: "none", cursor: "pointer" }}>
-                      {document?.originalFileName}
-                    </Link>
-                  </TableCell>
-                  <TableCell align="center">
-                    <Stack direction="row" spacing={2} justifyContent="center">
-                      <IconButton>
-                        <VisibilityIcon />
-                      </IconButton>
-                    </Stack>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer>
+                <TableCell
+                  align="center"
+                  sx={{ fontWeight: "bolder", color: "#FFFFFF" }}
+                >
+                  Action
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {data?.attachments?.map((document, i) => {
+                return (
+                  <TableRow key={document.id}>
+                    <TableCell align="center" component="th" scope="row">
+                      {i + 1}
+                    </TableCell>
+                    <TableCell align="center" component="th" scope="row">
+                      {document.documentName}
+                    </TableCell>
+                    <TableCell align="center">
+                      <Link sx={{ textDecoration: "none", cursor: "pointer" }}>
+                        {document?.originalFileName}
+                      </Link>
+                    </TableCell>
+                    <TableCell align="center">
+                      <Stack
+                        direction="row"
+                        spacing={2}
+                        justifyContent="center"
+                      >
+                        <IconButton>
+                          <VisibilityIcon />
+                        </IconButton>
+                      </Stack>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      ) : (
+        <Alert severity="error">Documents are required</Alert>
+      )}
     </Stack>
   );
 };
