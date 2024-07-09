@@ -56,12 +56,12 @@ const RegisterUser = () => {
           </Alert>
         )}
         {isSuccess && (
-          <Alert severity="error" sx={{ m: 2, width: "100%" }}>
+          <Alert sx={{ m: 2, width: "100%" }}>
             {data.message}{" "}
           </Alert>
         )}
 
-<Stack height={150} alignItems="center" padding={2}>
+        <Stack height={150} alignItems="center" padding={2}>
           <img src={blueLogo} alt="" height={150} width={150} />
         </Stack>
 
