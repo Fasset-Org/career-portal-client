@@ -91,7 +91,7 @@ const StudentsHome = () => {
                   height: 0,
                   position: "relative",
                   bottom: 8,
-                  left: { md: 120, xs: 150 }
+                  left: { md: 120, xs: 140 }
                 }}
               >
                 <EditLearnerBasicInformation userInfo={data} />
