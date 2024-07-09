@@ -10,7 +10,7 @@ import {
   useMediaQuery,
   useTheme
 } from "@mui/material";
-import React, { useEffect } from "react";
+import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import ApiQueries from "../apiQuries";
 import EditLearnerBasicInformation from "./modals/EditLearnerBasicInformation";
@@ -18,7 +18,6 @@ import EditAddressInforModal from "./modals/AddressInforModal";
 import LearnerInformation from "./LearnerInformation";
 
 const StudentsHome = () => {
-  const [progress, setProgress] = React.useState(20);
   const theme = useTheme();
 
   const { data } = useQuery({
@@ -30,48 +29,7 @@ const StudentsHome = () => {
     // staleTime: 1000 * 60 * 60 * 24
   });
 
-  console.log(data);
-
-  useEffect(() => {
-    const calculateStudentProgress = () => {
-      const studentInfoCompleted = data?.studentInformation?.completed
-        ? true
-        : false; // 15
-      const addressInfoCompleted = data?.studentAddress?.completed
-        ? true
-        : false; // 20
-      const documentsCompleted = data?.attachments?.length >= 3 ? true : false; // 15
-      const studentProgrammeCompleted =
-        data?.studentProgrammes?.length > 0 ? true : false; // 15
-      const educationCompleted = data?.basicEducation?.completed ? true : false; // 15
-
-      if (studentInfoCompleted) {
-        setProgress((prevState) => prevState + 15);
-      }
-
-      if (addressInfoCompleted) {
-        setProgress((prevState) => prevState + 20);
-      }
-
-      if (documentsCompleted) {
-        setProgress((prevState) => prevState + 15);
-      }
-      if (studentProgrammeCompleted) {
-        setProgress((prevState) => prevState + 15);
-      }
-      if (educationCompleted) {
-        setProgress((prevState) => prevState + 15);
-      }
-    };
-
-    calculateStudentProgress();
-  }, [
-    data?.attachments?.length,
-    data?.basicEducation?.completed,
-    data?.studentAddress?.completed,
-    data?.studentInformation?.completed,
-    data?.studentProgrammes?.length
-  ]);
+ 
 
   return (
     <Box mt={6} padding={2}>
@@ -93,11 +51,11 @@ const StudentsHome = () => {
               <Box sx={{ width: "100%" }}>
                 <LinearProgress
                   variant="determinate"
-                  value={progress}
+                  value={data?.profileProgress}
                   color={
-                    progress < 50
+                    data?.profileProgress < 50
                       ? "error"
-                      : progress >= 50 && progress < 75
+                      : data?.profileProgress >= 50 && data?.profileProgress < 75
                       ? "warning"
                       : "success"
                   }
@@ -106,7 +64,7 @@ const StudentsHome = () => {
               </Box>
               <Box>
                 <Typography variant="body2" color="text.secondary">
-                  {`${Math.round(progress)}%`}
+                  {`${Math.round(data?.profileProgress)}%`}
                 </Typography>
               </Box>
             </Box>
