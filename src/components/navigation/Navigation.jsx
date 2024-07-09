@@ -268,12 +268,18 @@ export default function Navigation({ children, setThemeMode, currentTheme }) {
                 <>
                   <Tooltip title="Set Theme">
                     {currentTheme ? (
-                      <IconButton onClick={() => setThemeMode(!currentTheme)}>
-                        <DarkModeIcon />
+                      <IconButton
+                        onClick={() => setThemeMode(!currentTheme)}
+                        size="large"
+                      >
+                        <DarkModeIcon fontSize="large" />
                       </IconButton>
                     ) : (
-                      <IconButton onClick={() => setThemeMode(!currentTheme)}>
-                        <LightModeIcon />
+                      <IconButton
+                        onClick={() => setThemeMode(!currentTheme)}
+                        size="large"
+                      >
+                        <LightModeIcon fontSize="large" />
                       </IconButton>
                     )}
                   </Tooltip>
@@ -496,7 +502,7 @@ export default function Navigation({ children, setThemeMode, currentTheme }) {
         </Drawer>
       )}
 
-      <Main open={open} sx={{ p: 0, }}>
+      <Main open={open} sx={{ p: 0 }}>
         {data?.userType !== "student" && <DrawerHeader />}
         {children}
       </Main>
