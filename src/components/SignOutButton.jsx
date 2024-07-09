@@ -46,7 +46,7 @@ export const SignOutButton = () => {
           aria-label="logout"
           onClick={handleClickOpen}
         >
-          <LogoutIcon />
+          <LogoutIcon fontSize="large" />
         </IconButton>
       </Tooltip>
       <Dialog
