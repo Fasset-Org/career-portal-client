@@ -29,8 +29,6 @@ const StudentsHome = () => {
     // staleTime: 1000 * 60 * 60 * 24
   });
 
- 
-
   return (
     <Box mt={6} padding={2}>
       <Stack direction={{ md: "row", xs: "column", sm: "column" }} mt={2}>
@@ -55,7 +53,8 @@ const StudentsHome = () => {
                   color={
                     data?.profileProgress < 50
                       ? "error"
-                      : data?.profileProgress >= 50 && data?.profileProgress < 75
+                      : data?.profileProgress >= 50 &&
+                        data?.profileProgress < 75
                       ? "warning"
                       : "success"
                   }
@@ -132,15 +131,38 @@ const StudentsHome = () => {
                     data?.lastName
                   }`}
               </Typography>
-              <Typography fontSize={14}>Email: {data?.email}</Typography>
-              <Typography fontSize={14}>
-                Contact: {data?.studentInformation?.mobileNumber || "None"}
+              <Typography component={Stack} direction="row">
+                <Typography fontWeight="bolder" fontSize={14}>
+                  Email :
+                </Typography>
+                &nbsp;&nbsp;
+                <Typography fontSize={14}>{data?.email}</Typography>
               </Typography>
-              <Typography fontSize={14} textAlign="center">
-                Occupation: {data?.studentInformation?.careerStatus || "None"}
+              <Typography component={Stack} direction="row">
+                <Typography fontWeight="bolder" fontSize={14}>
+                  Contact :
+                </Typography>{" "}
+                &nbsp;&nbsp;
+                <Typography fontSize={14}>
+                  {"+27 "} {data?.studentInformation?.mobileNumber || "None"}
+                </Typography>
               </Typography>
-              <Typography fontSize={14}>
-                ID : {data?.studentInformation?.identificationNumber || "None"}
+              <Typography textAlign="center" component={Stack} direction="row">
+                <Typography fontSize={14} fontWeight="bolder">
+                  Occupation :
+                </Typography>{" "}
+                &nbsp;&nbsp;
+                <Typography fontSize={14}>
+                  {data?.studentInformation?.careerStatus || "None"}
+                </Typography>
+              </Typography>
+              <Typography component={Stack} direction="row">
+                <Typography fontWeight="bolder" fontSize={14}>
+                  ID Number :
+                </Typography>{" "}
+                <Typography fontSize={14}>
+                  {data?.studentInformation?.identificationNumber || "None"}
+                </Typography>
               </Typography>
 
               <Divider sx={{ width: "100%" }} />
