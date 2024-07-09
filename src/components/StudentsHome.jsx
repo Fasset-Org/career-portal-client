@@ -10,7 +10,7 @@ import {
   useMediaQuery,
   useTheme
 } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import ApiQueries from "../apiQuries";
 import EditLearnerBasicInformation from "./modals/EditLearnerBasicInformation";
@@ -18,7 +18,7 @@ import EditAddressInforModal from "./modals/AddressInforModal";
 import LearnerInformation from "./LearnerInformation";
 
 const StudentsHome = () => {
-  const [progress] = React.useState(40);
+  const [progress, setProgress] = React.useState(20);
   const theme = useTheme();
 
   const { data } = useQuery({
@@ -29,6 +29,49 @@ const StudentsHome = () => {
 
     // staleTime: 1000 * 60 * 60 * 24
   });
+
+  console.log(data);
+
+  useEffect(() => {
+    const calculateStudentProgress = () => {
+      const studentInfoCompleted = data?.studentInformation?.completed
+        ? true
+        : false; // 15
+      const addressInfoCompleted = data?.studentAddress?.completed
+        ? true
+        : false; // 20
+      const documentsCompleted = data?.attachments?.length >= 3 ? true : false; // 15
+      const studentProgrammeCompleted =
+        data?.studentProgrammes?.length > 0 ? true : false; // 15
+      const educationCompleted = data?.basicEducation?.completed ? true : false; // 15
+
+      if (studentInfoCompleted) {
+        setProgress((prevState) => prevState + 15);
+      }
+
+      if (addressInfoCompleted) {
+        setProgress((prevState) => prevState + 20);
+      }
+
+      if (documentsCompleted) {
+        setProgress((prevState) => prevState + 15);
+      }
+      if (studentProgrammeCompleted) {
+        setProgress((prevState) => prevState + 15);
+      }
+      if (educationCompleted) {
+        setProgress((prevState) => prevState + 15);
+      }
+    };
+
+    calculateStudentProgress();
+  }, [
+    data?.attachments?.length,
+    data?.basicEducation?.completed,
+    data?.studentAddress?.completed,
+    data?.studentInformation?.completed,
+    data?.studentProgrammes?.length
+  ]);
 
   return (
     <Box mt={6} padding={2}>
@@ -86,7 +129,14 @@ const StudentsHome = () => {
               Student Profile
             </Typography> */}
             <Stack spacing={0.5} alignItems="center" justifyContent="center">
-              <Box sx={{height: 0, position: 'relative', bottom: 8, left: {md: 120, xs: 150}}}>
+              <Box
+                sx={{
+                  height: 0,
+                  position: "relative",
+                  bottom: 8,
+                  left: { md: 120, xs: 150 }
+                }}
+              >
                 <EditLearnerBasicInformation userInfo={data} />
               </Box>
               {/* <img
@@ -135,7 +185,7 @@ const StudentsHome = () => {
                 ID : {data?.studentInformation?.identificationNumber || "None"}
               </Typography>
 
-              <Divider sx={{width: '100%'}} />
+              <Divider sx={{ width: "100%" }} />
 
               <Stack
                 spacing={2}
