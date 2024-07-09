@@ -93,9 +93,9 @@ export const themeLight = createTheme({
     },
     MuiButton: {
       styleOverrides: {
-        // root: {
-        //   height: 37
-        // }
+        root: {
+          height: 50
+        }
       }
     },
     MuiAccordionSummary: {
