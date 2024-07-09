@@ -14,11 +14,17 @@ import React from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import { useTheme } from "@mui/material/styles";
 
 const LearnerProgrammes = () => {
   // const [selectedInterest, setSelectedInterest] = React.useState();
   const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
   const checkedIcon = <CheckBoxIcon fontSize="small" />;
+  const theme = useTheme();
+
+  const themeMode = theme.palette.mode;
+
+  console.log(themeMode);
 
   // const handleChange = (event) => {
   //   const {
@@ -134,10 +140,17 @@ const LearnerProgrammes = () => {
         return (
           <Accordion key={i}>
             <AccordionSummary
-              expandIcon={<ExpandMoreIcon sx={{ color: "#FFFFFF" }} />}
+              expandIcon={
+                <ExpandMoreIcon
+                  sx={{ color: themeMode === "light" ? "#FFFFFF" : "#000000" }}
+                />
+              }
               aria-controls="panel1-content"
               id="panel1-header"
-              sx={{ backgroundColor: "primary.main" }}
+              sx={{
+                backgroundColor: "primary.main",
+                color: themeMode === "light" ? "#FFFFFF" : "#000000"
+              }}
             >
               {programme.programmeName}
             </AccordionSummary>
