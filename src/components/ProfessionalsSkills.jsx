@@ -105,7 +105,7 @@ const ProfessionalsSkills = () => {
                         spacing={2}
                         justifyContent="center"
                       >
-                        <ProfessionalsSkillsModal skill={skill} />
+                        {/* <ProfessionalsSkillsModal skill={skill} /> */}
                         <DeleteSkillModal id={skill.id} />
                       </Stack>
                     </TableCell>
