@@ -58,25 +58,6 @@ const ProfessionalsSkillsModal = ({ skill, userId }) => {
       )}
       {isSuccess && data && <AlertPopup open={true} message={data.message} />}
 
-      {/* {error &&
-        editTertiaryEducationQuery.isError && (
-          <AlertPopup
-            open={true}
-            message={
-              editTertiaryEducationQuery.error?.response?.data?.message ||
-              "Internal server error"
-            }
-            severity="error"
-          />
-        )}
-      {editTertiaryEducationQuery.isSuccess &&
-        editTertiaryEducationQuery.data && (
-          <AlertPopup
-            open={true}
-            message={editTertiaryEducationQuery.data.message}
-          />
-        )} */}
-
       {skill ? (
         <Tooltip title="Edit">
           <IconButton
