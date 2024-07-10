@@ -1,6 +1,8 @@
 import {
+  Backdrop,
   Box,
   Button,
+  CircularProgress,
   Dialog,
   DialogContent,
   Grid,
@@ -27,6 +29,7 @@ import AddIcon from "@mui/icons-material/Add";
 
 const AddEducationModal = ({ basicEducation, userId }) => {
   const [open, setOpen] = React.useState(false);
+  const [openBackDrop, setOpenBackDrop] = React.useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -42,10 +45,11 @@ const AddEducationModal = ({ basicEducation, userId }) => {
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries(["userInfo"]);
-      handleClose()
+      setOpenBackDrop(false);
+      handleClose();
     },
     onError: (err) => {
-      console.log(err);
+      setOpenBackDrop(false);
     }
   });
 
@@ -75,6 +79,18 @@ const AddEducationModal = ({ basicEducation, userId }) => {
       label: "Grade 12(Matric)"
     }
   ];
+
+  const handleBackDropClose = () => {
+    setOpenBackDrop(false);
+  };
+
+  React.useEffect(() => {
+    if (isLoading) {
+      setOpenBackDrop(true);
+    } else {
+      setOpenBackDrop(false);
+    }
+  }, [isLoading]);
 
   return (
     <div>
@@ -215,6 +231,20 @@ const AddEducationModal = ({ basicEducation, userId }) => {
                         </Button>
                       </Box>
                     </Grid>
+                    <Backdrop
+                      sx={{
+                        color: "#fff",
+                        pointerEvents: "none",
+                        zIndex: (theme) => theme.zIndex.drawer + 1,
+                        borderWidth: 4,
+                        borderColor: "primary.main",
+                        borderStyle: "solid"
+                      }}
+                      open={openBackDrop}
+                      onClick={handleBackDropClose}
+                    >
+                      <CircularProgress color="primary" />
+                    </Backdrop>
                   </Grid>
                 </Form>
               );
