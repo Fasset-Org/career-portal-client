@@ -1,7 +1,6 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import logo from "../../images/white_logo_only.png";
 import CssBaseline from "@mui/material/CssBaseline";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -40,6 +39,8 @@ import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import { useTheme } from "@mui/material/styles";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import CastForEducationIcon from "@mui/icons-material/CastForEducation";
+import Close from "@mui/icons-material/Close";
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open"
 })(({ theme, open }) => ({
@@ -114,6 +115,7 @@ const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open"
 })(({ theme, open }) => ({
   width: drawerWidth,
+  // marginTop: 8,
   flexShrink: 0,
   whiteSpace: "nowrap",
   boxSizing: "border-box",
@@ -182,23 +184,25 @@ export default function Navigation({ children, setThemeMode, currentTheme }) {
         }}
       >
         <Toolbar>
-          {data && data.userType !== "student" && (
+          {data && data.userType === "admin" && (
             <>
               {open ? (
                 <IconButton
                   aria-label="open drawer"
                   onClick={handleDrawerClose}
                   edge="start"
+                  size="medium"
                 >
-                  <MenuIcon />
+                  <Close fontSize="medium" />
                 </IconButton>
               ) : (
                 <IconButton
                   aria-label="open drawer"
                   onClick={handleDrawerOpen}
                   edge="start"
+                  size="medium"
                 >
-                  <MenuIcon />
+                  <MenuIcon fontSize="medium" />
                 </IconButton>
               )}
             </>
@@ -235,52 +239,51 @@ export default function Navigation({ children, setThemeMode, currentTheme }) {
 
           <Box sx={{ mx: "auto" }}></Box>
           <Stack direction="row" spacing={2}>
-            {/* <Tooltip title="Set Theme">
-              {currentTheme ? (
-                <IconButton onClick={() => setThemeMode(!currentTheme)}>
-                  <DarkModeIcon />
-                </IconButton>
-              ) : (
-                <IconButton onClick={() => setThemeMode(!currentTheme)}>
-                  <WbSunnyTwoToneIcon />
-                </IconButton>
-              )}
-            </Tooltip> */}
             <Stack
               direction="row"
               spacing={1}
               justifyContent="center"
               alignItems="center"
             >
-              {/* <Tooltip title="Set Theme">
-              {currentTheme ? (
-                <IconButton onClick={() => setThemeMode(!currentTheme)}>
-                  <DarkModeIcon />
-                </IconButton>
-              ) : (
-                <IconButton onClick={() => setThemeMode(!currentTheme)}>
-                  <WbSunnyTwoToneIcon />
-                </IconButton>
-              )}
-            </Tooltip> */}
-
               {data ? (
                 <>
                   <Tooltip title="Set Theme">
-                    {currentTheme ? (
-                      <IconButton
-                        onClick={() => setThemeMode(!currentTheme)}
-                        size="large"
-                      >
-                        <DarkModeIcon fontSize="large" />
-                      </IconButton>
+                    {isDesktop ? (
+                      <>
+                        {currentTheme ? (
+                          <IconButton
+                            onClick={() => setThemeMode(!currentTheme)}
+                            size="medium"
+                          >
+                            <DarkModeIcon fontSize="medium" />
+                          </IconButton>
+                        ) : (
+                          <IconButton
+                            onClick={() => setThemeMode(!currentTheme)}
+                            size="medium"
+                          >
+                            <LightModeIcon fontSize="medium" />
+                          </IconButton>
+                        )}
+                      </>
                     ) : (
-                      <IconButton
-                        onClick={() => setThemeMode(!currentTheme)}
-                        size="large"
-                      >
-                        <LightModeIcon fontSize="large" />
-                      </IconButton>
+                      <>
+                        {currentTheme ? (
+                          <IconButton
+                            onClick={() => setThemeMode(!currentTheme)}
+                            size="large"
+                          >
+                            <DarkModeIcon fontSize="large" />
+                          </IconButton>
+                        ) : (
+                          <IconButton
+                            onClick={() => setThemeMode(!currentTheme)}
+                            size="large"
+                          >
+                            <LightModeIcon fontSize="large" />
+                          </IconButton>
+                        )}
+                      </>
                     )}
                   </Tooltip>
                   {/* <Avatar
@@ -323,8 +326,8 @@ export default function Navigation({ children, setThemeMode, currentTheme }) {
                 </>
               ) : (
                 <>
-                  <IconButton onClick={handleClick}>
-                    <MoreVertIcon />
+                  <IconButton onClick={handleClick} size="large">
+                    <MoreVertIcon fontSize="large" />
                   </IconButton>
 
                   <Menu
@@ -389,17 +392,10 @@ export default function Navigation({ children, setThemeMode, currentTheme }) {
         </Toolbar>
       </AppBar>
 
-      {data && data.userType !== "student" && (
+      {data && data.userType === "admin" && (
         <Drawer variant="permanent" open={open}>
           <DrawerHeader sx={{ backgroundColor: "primary.dark" }}>
-            {/* <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "ltr" ? (
-              <ChevronLeftIcon />
-            ) : (
-              <ChevronRightIcon />
-            )}
-          </IconButton> */}
-            <img src={logo} alt="" width={40} height={40} />
+            {/* <img src={logo} alt="" width={40} height={40} />
             <Typography
               variant="h6"
               noWrap
@@ -412,7 +408,7 @@ export default function Navigation({ children, setThemeMode, currentTheme }) {
               }}
             >
               Learner Portal
-            </Typography>
+            </Typography> */}
           </DrawerHeader>
           <Divider />
           {open && (
@@ -425,8 +421,9 @@ export default function Navigation({ children, setThemeMode, currentTheme }) {
           <List>
             {[
               { title: "All Learners", icon: PeopleOutlineIcon },
-              { title: "Active Learners", icon: AssignmentIndIcon },
-              { title: "Past Learners", icon: PersonAddDisabledIcon }
+              { title: "Enrolled Learners", icon: AssignmentIndIcon },
+              { title: "Previous Learners", icon: PersonAddDisabledIcon },
+              { title: "Learner Programmes", icon: CastForEducationIcon }
             ].map((listItem, index) => (
               <ListItem
                 key={listItem.title}
@@ -503,7 +500,7 @@ export default function Navigation({ children, setThemeMode, currentTheme }) {
       )}
 
       <Main open={open} sx={{ p: 0 }}>
-        {data?.userType !== "student" && <DrawerHeader />}
+        {/* {data?.userType === "admin" && <DrawerHeader />} */}
         {children}
       </Main>
     </Box>
