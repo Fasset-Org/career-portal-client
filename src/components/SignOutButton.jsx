@@ -7,12 +7,14 @@ import {
   DialogContent,
   DialogTitle,
   IconButton,
-  Typography
+  Typography,
+  useMediaQuery
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 import LogoutIcon from "@mui/icons-material/Logout";
 import Tooltip from "@mui/material/Tooltip";
+import { useTheme } from "@mui/material/styles";
 
 /**
  * Renders a sign-out button
@@ -20,6 +22,8 @@ import Tooltip from "@mui/material/Tooltip";
 export const SignOutButton = () => {
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -40,14 +44,25 @@ export const SignOutButton = () => {
   return (
     <div>
       <Tooltip title="Logout">
-        <IconButton
-          color="error"
-          size="large"
-          aria-label="logout"
-          onClick={handleClickOpen}
-        >
-          <LogoutIcon fontSize="large" />
-        </IconButton>
+        {isDesktop ? (
+          <IconButton
+            color="error"
+            size="medium"
+            aria-label="logout"
+            onClick={handleClickOpen}
+          >
+            <LogoutIcon fontSize="medium" />
+          </IconButton>
+        ) : (
+          <IconButton
+            color="error"
+            size="large"
+            aria-label="logout"
+            onClick={handleClickOpen}
+          >
+            <LogoutIcon fontSize="large" />
+          </IconButton>
+        )}
       </Tooltip>
       <Dialog
         sx={{ border: "3px solid #F44336 " }}
