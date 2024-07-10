@@ -1,12 +1,13 @@
 import {
+  Backdrop,
   Box,
   Button,
+  CircularProgress,
   Dialog,
   DialogContent,
   Grid,
   IconButton,
   InputLabel,
-  LinearProgress,
   Stack,
   Tooltip,
   Typography,
@@ -29,6 +30,7 @@ import AddIcon from "@mui/icons-material/Add";
 
 const TertiaryEducationModal = ({ tertiaryEducation, userId }) => {
   const [open, setOpen] = React.useState(false);
+  const [openBackDrop, setOpenBackDrop] = React.useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -44,31 +46,21 @@ const TertiaryEducationModal = ({ tertiaryEducation, userId }) => {
 
   const { mutate, isSuccess, isError, data, error, isLoading } = useMutation({
     mutationFn: (formData) => {
-      return ApiQueries.addTertiaryEducation(formData);
+      if (tertiaryEducation) {
+        return ApiQueries.editTertiaryEducation(formData);
+      } else {
+        return ApiQueries.addTertiaryEducation(formData);
+      }
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries(["userInfo"]);
+      setOpenBackDrop(false);
+      handleClose();
     },
     onError: (err) => {
-      console.log(err);
+      setOpenBackDrop(false);
     }
   });
-
-  const editTertiaryEducationQuery = useMutation({
-    mutationFn: (formData) => {
-      return ApiQueries.editTertiaryEducation(formData);
-    },
-    onSuccess: (data) => {
-      queryClient.invalidateQueries(["userInfo"]);
-    },
-    onError: (err) => {
-      console.log(err);
-    }
-  });
-
-  if (isLoading) {
-    return <LinearProgress />;
-  }
 
   const qualificationLevelOptions = [
     {
@@ -192,6 +184,18 @@ const TertiaryEducationModal = ({ tertiaryEducation, userId }) => {
     }
   ];
 
+  const handleBackDropClose = () => {
+    setOpenBackDrop(false);
+  };
+
+  React.useEffect(() => {
+    if (isLoading) {
+      setOpenBackDrop(true);
+    } else {
+      setOpenBackDrop(false);
+    }
+  }, [isLoading]);
+
   return (
     <div>
       {error && isError && (
@@ -202,25 +206,6 @@ const TertiaryEducationModal = ({ tertiaryEducation, userId }) => {
         />
       )}
       {isSuccess && data && <AlertPopup open={true} message={data.message} />}
-
-      {editTertiaryEducationQuery.error &&
-        editTertiaryEducationQuery.isError && (
-          <AlertPopup
-            open={true}
-            message={
-              editTertiaryEducationQuery.error?.response?.data?.message ||
-              "Internal server error"
-            }
-            severity="error"
-          />
-        )}
-      {editTertiaryEducationQuery.isSuccess &&
-        editTertiaryEducationQuery.data && (
-          <AlertPopup
-            open={true}
-            message={editTertiaryEducationQuery.data.message}
-          />
-        )}
 
       {tertiaryEducation ? (
         <Tooltip title="Edit">
@@ -306,11 +291,7 @@ const TertiaryEducationModal = ({ tertiaryEducation, userId }) => {
               })
             })}
             onSubmit={(values) => {
-              if (tertiaryEducation) {
-                editTertiaryEducationQuery.mutate(values);
-              } else {
-                mutate(values);
-              }
+              mutate(values);
             }}
           >
             {({ values, errors }) => {
@@ -373,11 +354,7 @@ const TertiaryEducationModal = ({ tertiaryEducation, userId }) => {
                             type="submit"
                             sx={{ ml: 2, px: 3 }}
                           >
-                            {editTertiaryEducationQuery.isLoading ? (
-                              <LinearProgress color="secondary" />
-                            ) : (
-                              "Edit"
-                            )}
+                            Edit
                           </Button>
                         ) : (
                           <Button
@@ -385,15 +362,25 @@ const TertiaryEducationModal = ({ tertiaryEducation, userId }) => {
                             type="submit"
                             sx={{ ml: 2, px: 3 }}
                           >
-                            {isLoading ? (
-                              <LinearProgress color="secondary" />
-                            ) : (
-                              "Add"
-                            )}
+                            Add
                           </Button>
                         )}
                       </Box>
                     </Grid>
+                    <Backdrop
+                      sx={{
+                        color: "#fff",
+                        pointerEvents: "none",
+                        zIndex: (theme) => theme.zIndex.drawer + 1,
+                        borderWidth: 4,
+                        borderColor: "primary.main",
+                        borderStyle: "solid"
+                      }}
+                      open={openBackDrop}
+                      onClick={handleBackDropClose}
+                    >
+                      <CircularProgress color="primary" />
+                    </Backdrop>
                   </Grid>
                 </Form>
               );
