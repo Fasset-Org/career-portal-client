@@ -1,10 +1,6 @@
 // import "./App.css";
 import Navigation from "./components/navigation/Navigation";
-import {
-  Route,
-  BrowserRouter as Router,
-  Routes
-} from "react-router-dom";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import { ThemeProvider } from "@emotion/react";
 import { themeDark, themeLight } from "./theme";
@@ -18,6 +14,13 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import PrivateRoute from "./components/PrivateRoute";
 import Dashboard from "./pages/Dashboard";
 import StudentsHome from "./components/StudentsHome";
+import Learners from "./components/admin/activities/Learners";
+import EnrolledLearners from "./components/admin/activities/EnrolledLearners";
+import PreviousLearners from "./components/admin/activities/PreviousLearners";
+// import LearnerProgrammes from "./components/LearnerProgrammes";
+import Users from "./components/admin/user-management/Users";
+import Modules from "./components/admin/user-management/Modules";
+import AdminLearnerProgrammes from "./components/admin/activities/AdminLearnerProgrammes";
 
 function App() {
   const [themeMode, setThemeMode] = useState(true);
@@ -43,8 +46,25 @@ function App() {
               <Route path="/register" element={<RegisterUser />} />
 
               <Route path="/" element={<PrivateRoute />}>
+                {/* Learner Routes */}
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/profile" element={<StudentsHome />} />
+                {/* Admin Routes */}
+                <Route path="/learners" element={<Learners />} />
+                <Route
+                  path="/enrolledLearners"
+                  element={<EnrolledLearners />}
+                />
+                <Route
+                  path="/previousLearners"
+                  element={<PreviousLearners />}
+                />
+                <Route
+                  path="/adminLearnersProgrammes"
+                  element={<AdminLearnerProgrammes />}
+                />
+                <Route path="/users" element={<Users />} />
+                <Route path="/modules" element={<Modules />} />
               </Route>
             </Routes>
           </Navigation>
