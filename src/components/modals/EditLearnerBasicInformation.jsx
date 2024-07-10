@@ -5,7 +5,9 @@ import DialogContent from "@mui/material/DialogContent";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import {
+  Backdrop,
   Box,
+  CircularProgress,
   Grid,
   IconButton,
   InputLabel,
@@ -28,6 +30,7 @@ export default function EditLearnerBasicInformation({ userInfo }) {
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+  const [openBackDrop, setOpenBackDrop] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -45,8 +48,11 @@ export default function EditLearnerBasicInformation({ userInfo }) {
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries(["userInfo"]);
+      setOpenBackDrop(false);
+      setOpen(false)
     },
     onError: (err) => {
+      setOpenBackDrop(false);
       console.log(err);
     }
   });
@@ -96,6 +102,18 @@ export default function EditLearnerBasicInformation({ userInfo }) {
       label: "Indian"
     }
   ];
+
+  const handleBackDropClose = () => {
+    setOpenBackDrop(false);
+  };
+
+  React.useEffect(() => {
+    if (isLoading) {
+      setOpenBackDrop(true);
+    } else {
+      setOpenBackDrop(false);
+    }
+  }, [isLoading]);
 
   return (
     <div>
@@ -314,6 +332,21 @@ export default function EditLearnerBasicInformation({ userInfo }) {
                         </Button>
                       </Box>
                     </Grid>
+
+                    <Backdrop
+                      sx={{
+                        color: "#fff",
+                        pointerEvents: "none",
+                        zIndex: (theme) => theme.zIndex.drawer + 1,
+                        borderWidth: 4,
+                        borderColor: "primary.main",
+                        borderStyle: "solid"
+                      }}
+                      open={openBackDrop}
+                      onClick={handleBackDropClose}
+                    >
+                      <CircularProgress color="primary" />
+                    </Backdrop>
                   </Grid>
                 </Form>
               );
