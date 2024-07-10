@@ -2,12 +2,12 @@ import React from "react";
 // import { useMsal } from "@azure/msal-react";
 import {
   Button,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
   IconButton,
-  LinearProgress,
   Typography
 } from "@mui/material";
 
@@ -108,7 +108,7 @@ export const DeleteSkillModal = ({ id }) => {
             autoFocus
             onClick={() => mutate(id)}
           >
-            {isLoading ? <LinearProgress color="secondary" /> : "Delete"}
+            {isLoading ? <CircularProgress color="secondary" /> : "Delete"}
           </Button>
         </DialogActions>
       </Dialog>
