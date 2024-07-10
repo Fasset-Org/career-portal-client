@@ -6,7 +6,9 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import {
   Alert,
+  Backdrop,
   Box,
+  CircularProgress,
   Grid,
   IconButton,
   LinearProgress,
@@ -30,6 +32,7 @@ export default function EditAddressInforModal({ studentAddress }) {
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+  const [openBackDrop, setOpenBackDrop] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -51,9 +54,25 @@ export default function EditAddressInforModal({ studentAddress }) {
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries(["userInfo"]);
+      setOpenBackDrop(false);
       handleClose();
+    },
+    onError: (err) => {
+      setOpenBackDrop(false);
     }
   });
+
+  const handleBackDropClose = () => {
+    setOpenBackDrop(false);
+  };
+
+  React.useEffect(() => {
+    if (isLoading) {
+      setOpenBackDrop(true);
+    } else {
+      setOpenBackDrop(false);
+    }
+  }, [isLoading]);
 
   return (
     <div>
@@ -251,6 +270,20 @@ export default function EditAddressInforModal({ studentAddress }) {
                         </Button>
                       </Box>
                     </Grid>
+                    <Backdrop
+                      sx={{
+                        color: "#fff",
+                        pointerEvents: "none",
+                        zIndex: (theme) => theme.zIndex.drawer + 1,
+                        borderWidth: 4,
+                        borderColor: "primary.main",
+                        borderStyle: "solid"
+                      }}
+                      open={openBackDrop}
+                      onClick={handleBackDropClose}
+                    >
+                      <CircularProgress color="primary" />
+                    </Backdrop>
                   </Grid>
                 </Form>
               );
