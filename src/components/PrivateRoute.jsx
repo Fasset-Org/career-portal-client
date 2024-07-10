@@ -52,7 +52,7 @@ const PrivateRoute = () => {
     window.location.href = `${process.env.REACT_APP_PUBLIC_URL}/home`;
   }
 
-  return isSuccess && data ? <Outlet /> : <Navigate to="/home" />;
+  return isSuccess && data ? <Outlet /> : <Navigate to="/dashboard" />;
 };
 
 export default PrivateRoute;
