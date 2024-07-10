@@ -1,6 +1,8 @@
 import {
+  Backdrop,
   Box,
   Button,
+  CircularProgress,
   Dialog,
   DialogContent,
   Grid,
@@ -12,7 +14,7 @@ import {
   Typography,
   useMediaQuery
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { Field, Form, Formik } from "formik";
 import SelectFieldWrapper from "../form-components/SelectFieldWrapper";
@@ -29,19 +31,21 @@ const AddEditAttachmentModal = ({ attachment, userId }) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
   const queryClient = useQueryClient();
+  const [openBackDrop, setOpenBackDrop] = useState(false);
 
-  const addDocumentMutation = useMutation({
+  const { mutate, error, isError, isSuccess, data, isLoading } = useMutation({
     mutationFn: async (formData) => {
       return await ApiQueries.addDocument(formData);
     },
     onSuccess: (data) => {
+      setOpenBackDrop(false);
       queryClient.invalidateQueries("userInfo");
       setTimeout(() => {
         handleClose();
       }, 2000);
     },
     onError: (err) => {
-      console.log(err);
+      setOpenBackDrop(false);
     }
   });
 
@@ -72,6 +76,18 @@ const AddEditAttachmentModal = ({ attachment, userId }) => {
     setOpen(false);
   };
 
+  const handleBackDropClose = () => {
+    setOpenBackDrop(false);
+  };
+
+  useEffect(() => {
+    if (isLoading) {
+      setOpenBackDrop(true);
+    } else {
+      setOpenBackDrop(false);
+    }
+  }, [isLoading]);
+
   return (
     <div>
       {attachment ? (
@@ -100,37 +116,14 @@ const AddEditAttachmentModal = ({ attachment, userId }) => {
         </Tooltip>
       )}
 
-      {addDocumentMutation.error && addDocumentMutation.isError && (
+      {error && isError && (
         <AlertPopup
           open={true}
-          message={
-            addDocumentMutation.error?.response?.data?.message ||
-            "Internal server error"
-          }
+          message={error?.response?.data?.message || "Internal server error"}
           severity="error"
         />
       )}
-      {addDocumentMutation.isSuccess && addDocumentMutation.data && (
-        <AlertPopup open={true} message={addDocumentMutation.data.message} />
-      )}
-
-      {/* {editCertificationMutation.error && editCertificationMutation.isError && (
-        <AlertPopup
-          open={true}
-          message={
-            editCertificationMutation.error?.response?.data?.message ||
-            "Internal server error"
-          }
-          severity="error"
-        />
-      )}
-      {editCertificationMutation.isSuccess &&
-        editCertificationMutation.data && (
-          <AlertPopup
-            open={true}
-            message={editCertificationMutation.data.message}
-          />
-        )} */}
+      {isSuccess && data && <AlertPopup open={true} message={data.message} />}
 
       <Dialog fullScreen={fullScreen} open={open} onClose={handleClose}>
         <Stack
@@ -177,7 +170,7 @@ const AddEditAttachmentModal = ({ attachment, userId }) => {
                 }
               }
 
-              addDocumentMutation.mutate(formData);
+              mutate(formData);
             }}
             enableReinitialize={true}
           >
@@ -247,6 +240,21 @@ const AddEditAttachmentModal = ({ attachment, userId }) => {
                         </Button>
                       </Box>
                     </Grid>
+
+                    <Backdrop
+                      sx={{
+                        color: "#fff",
+                        pointerEvents: "none",
+                        zIndex: (theme) => theme.zIndex.drawer + 1,
+                        borderWidth: 4,
+                        borderColor: "primary.main",
+                        borderStyle: "solid"
+                      }}
+                      open={openBackDrop}
+                      onClick={handleBackDropClose}
+                    >
+                      <CircularProgress color="primary" />
+                    </Backdrop>
                   </Grid>
                 </Form>
               );
