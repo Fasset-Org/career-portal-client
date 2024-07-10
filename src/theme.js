@@ -35,10 +35,10 @@ export const themeDark = createTheme({
     MuiTableHead: {
       styleOverrides: {
         root: {
-          backgroundColor: "#163683"
+          backgroundColor: "#1ccaff"
         }
       }
-    }
+    },
 
     // MuiButton: {
     //   styleOverrides: {
