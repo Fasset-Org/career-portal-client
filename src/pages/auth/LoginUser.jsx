@@ -1,16 +1,18 @@
 import {
   Alert,
+  Backdrop,
   Button,
+  CircularProgress,
   Grid,
   InputLabel,
-  LinearProgress,
+  // LinearProgress,
   Link,
   Stack,
   Typography
 } from "@mui/material";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TextFieldWrapper from "../../components/form-components/TextFieldWrapper";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -21,6 +23,7 @@ import LoginIcon from "@mui/icons-material/Login";
 import blueLogo from "../../images/blueLogo-transparentBg.png";
 const LoginUser = () => {
   const navigate = useNavigate();
+  const [openBackDrop, setOpenBackDrop] = useState(false);
 
   const { mutate, error, isSuccess, isLoading, data } = useMutation({
     mutationFn: (formData) => {
@@ -30,12 +33,14 @@ const LoginUser = () => {
     },
 
     onSuccess: (data) => {
+      setOpenBackDrop(false);
       localStorage.setItem("token", data.user.token);
 
       window.location.href = `${process.env.REACT_APP_PUBLIC_URL}/dashboard`;
       // window.location.reload();
     },
     onError: (err) => {
+      setOpenBackDrop(false);
       console.log(err);
     },
     retry: 2
@@ -47,6 +52,18 @@ const LoginUser = () => {
       return ApiQueries.userInfo();
     }
   });
+
+  const handleClose = () => {
+    setOpenBackDrop(false);
+  };
+
+  useEffect(() => {
+    if (isLoading) {
+      setOpenBackDrop(true);
+    } else {
+      setOpenBackDrop(false);
+    }
+  }, [isLoading]);
 
   if (info) {
     return <Navigate to="/dashboard" />;
@@ -67,7 +84,6 @@ const LoginUser = () => {
         justifyContent="center"
         paddingX={{ md: 5, xs: 4 }}
         py={2}
-        
       >
         {error?.response?.status === 404 && (
           <Alert severity="error" color="error" sx={{ width: "100%" }}>
@@ -112,7 +128,7 @@ const LoginUser = () => {
               {() => {
                 return (
                   <Form>
-                    {isLoading && <LinearProgress />}
+                    {/* {isLoading && <LinearProgress />} */}
 
                     {/* <Stack alignItems="center">
                       <Typography
@@ -188,6 +204,20 @@ const LoginUser = () => {
                           Download Career Guide
                         </Button>
                       </Grid>
+                      <Backdrop
+                        sx={{
+                          color: "#fff",
+                          pointerEvents: "none",
+                          zIndex: (theme) => theme.zIndex.drawer + 1,
+                          borderWidth: 4,
+                          borderColor: "primary.main",
+                          borderStyle: "solid"
+                        }}
+                        open={openBackDrop}
+                        onClick={handleClose}
+                      >
+                        <CircularProgress color="primary" />
+                      </Backdrop>
                     </Grid>
                   </Form>
                 );
