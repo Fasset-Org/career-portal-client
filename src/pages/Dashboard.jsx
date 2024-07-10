@@ -3,6 +3,7 @@ import StudentsHome from "../components/StudentsHome";
 import { useQuery } from "@tanstack/react-query";
 import ApiQueries from "../apiQuries";
 import AdminHome from "../components/admin/AdminHome";
+import { Navigate } from "react-router-dom";
 
 const Dashboard = () => {
   const { data } = useQuery({
@@ -21,7 +22,7 @@ const Dashboard = () => {
     case "student":
       return <StudentsHome />;
     default:
-      return <AdminHome />;
+      return <Navigate to="/home" />;
   }
 };
 
