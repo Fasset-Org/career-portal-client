@@ -1,6 +1,8 @@
 import {
+  Backdrop,
   Box,
   Button,
+  CircularProgress,
   Dialog,
   DialogContent,
   Grid,
@@ -17,7 +19,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { Form, Formik } from "formik";
 import TextFieldWrapper from "../form-components/TextFieldWrapper";
 import SelectFieldWrapper from "../form-components/SelectFieldWrapper";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import ApiQueries from "../../apiQuries";
 import * as Yup from "yup";
 import AlertPopup from "../AlertPopup";
@@ -26,8 +28,10 @@ import EditIcon from "@mui/icons-material/Edit";
 
 const ProfessionalsSkillsModal = ({ skill, userId }) => {
   const [open, setOpen] = useState(false);
+  const [openBackDrop, setOpenBackDrop] = React.useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+  const queryClient = useQueryClient();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -37,15 +41,31 @@ const ProfessionalsSkillsModal = ({ skill, userId }) => {
     setOpen(false);
   };
 
-  const { mutate, error, isError, isSuccess, data } = useMutation({
+  const { mutate, error, isError, isSuccess, data, isLoading } = useMutation({
     mutationFn: (formData) => {
       return ApiQueries.addProfessionalSkill(formData);
     },
-    onSuccess: (data) => {},
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(["userInfo"]);
+      setOpenBackDrop(false);
+      handleClose();
+    },
     onError: (err) => {
-      console.log(err);
+      setOpenBackDrop(false);
     }
   });
+
+  const handleBackDropClose = () => {
+    setOpenBackDrop(false);
+  };
+
+  React.useEffect(() => {
+    if (isLoading) {
+      setOpenBackDrop(true);
+    } else {
+      setOpenBackDrop(false);
+    }
+  }, [isLoading]);
 
   return (
     <div>
@@ -187,6 +207,20 @@ const ProfessionalsSkillsModal = ({ skill, userId }) => {
                         )}
                       </Box>
                     </Grid>
+                    <Backdrop
+                      sx={{
+                        color: "#fff",
+                        pointerEvents: "none",
+                        zIndex: (theme) => theme.zIndex.drawer + 1,
+                        borderWidth: 4,
+                        borderColor: "primary.main",
+                        borderStyle: "solid"
+                      }}
+                      open={openBackDrop}
+                      onClick={handleBackDropClose}
+                    >
+                      <CircularProgress color="primary" />
+                    </Backdrop>
                   </Grid>
                 </Form>
               );
