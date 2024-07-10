@@ -1,6 +1,8 @@
 import {
+  Backdrop,
   Box,
   Button,
+  CircularProgress,
   Dialog,
   DialogContent,
   Grid,
@@ -15,7 +17,7 @@ import {
 import TextFieldWrapper from "../form-components/TextFieldWrapper";
 import { Field, Form, Formik } from "formik";
 import CloseIcon from "@mui/icons-material/Close";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTheme } from "@mui/material/styles";
 import EditIcon from "@mui/icons-material/Edit";
 import AddIcon from "@mui/icons-material/Add";
@@ -29,29 +31,23 @@ const CertificateAndTrainingModal = ({ userId, certificate }) => {
   const [open, setOpen] = useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+  const [openBackDrop, setOpenBackDrop] = useState(false);
 
   const queryClient = useQueryClient();
 
-  const addCertificateMutation = useMutation({
+  const { mutate, error, isError, isSuccess, data, isLoading } = useMutation({
     mutationFn: async (formData) => {
-      return await ApiQueries.addCertification(formData);
+      return certificate
+        ? await ApiQueries.editCertification(formData)
+        : await ApiQueries.addCertification(formData);
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries(["userInfo"]);
+      setOpenBackDrop(false);
       handleClose();
     },
     onError: (err) => {
-      console.log(err);
-    }
-  });
-
-  const editCertificationMutation = useMutation({
-    mutationFn: async (formData) => {
-      return await ApiQueries.editCertification(formData);
-    },
-    onSuccess: (data) => {
-      queryClient.invalidateQueries(["userInfo"]);
-      handleClose();
+      setOpenBackDrop(false);
     }
   });
 
@@ -63,7 +59,17 @@ const CertificateAndTrainingModal = ({ userId, certificate }) => {
     setOpen(false);
   };
 
-  // console.log(certificate)
+  const handleBackDropClose = () => {
+    setOpenBackDrop(false);
+  };
+
+  useEffect(() => {
+    if (isLoading) {
+      setOpenBackDrop(true);
+    } else {
+      setOpenBackDrop(false);
+    }
+  }, [isLoading]);
 
   return (
     <div>
@@ -104,37 +110,23 @@ const CertificateAndTrainingModal = ({ userId, certificate }) => {
         </Tooltip>
       )}
 
-      {addCertificateMutation.error && addCertificateMutation.isError && (
+      {error && isError && (
         <AlertPopup
           open={true}
-          message={
-            addCertificateMutation.error?.response?.data?.message ||
-            "Internal server error"
-          }
+          message={error?.response?.data?.message || "Internal server error"}
           severity="error"
         />
       )}
-      {addCertificateMutation.isSuccess && addCertificateMutation.data && (
-        <AlertPopup open={true} message={addCertificateMutation.data.message} />
-      )}
+      {isSuccess && data && <AlertPopup open={true} message={data.message} />}
 
-      {editCertificationMutation.error && editCertificationMutation.isError && (
+      {error && isError && (
         <AlertPopup
           open={true}
-          message={
-            editCertificationMutation.error?.response?.data?.message ||
-            "Internal server error"
-          }
+          message={error?.response?.data?.message || "Internal server error"}
           severity="error"
         />
       )}
-      {editCertificationMutation.isSuccess &&
-        editCertificationMutation.data && (
-          <AlertPopup
-            open={true}
-            message={editCertificationMutation.data.message}
-          />
-        )}
+      {isSuccess && data && <AlertPopup open={true} message={data.message} />}
 
       <Dialog fullScreen={fullScreen} open={open} onClose={handleClose}>
         <Stack
@@ -171,11 +163,7 @@ const CertificateAndTrainingModal = ({ userId, certificate }) => {
                 formData.append(key, value);
               }
 
-              if (certificate) {
-                editCertificationMutation.mutate(formData);
-              } else {
-                addCertificateMutation.mutate(formData);
-              }
+              mutate(formData);
             }}
             validationSchema={Yup.object().shape({
               course: Yup.string().required("Course required"),
@@ -248,6 +236,20 @@ const CertificateAndTrainingModal = ({ userId, certificate }) => {
                         )}
                       </Box>
                     </Grid>
+                    <Backdrop
+                      sx={{
+                        color: "#fff",
+                        pointerEvents: "none",
+                        zIndex: (theme) => theme.zIndex.drawer + 1,
+                        borderWidth: 4,
+                        borderColor: "primary.main",
+                        borderStyle: "solid"
+                      }}
+                      open={openBackDrop}
+                      onClick={handleBackDropClose}
+                    >
+                      <CircularProgress color="primary" />
+                    </Backdrop>
                   </Grid>
                 </Form>
               );
