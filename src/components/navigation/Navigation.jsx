@@ -420,15 +420,32 @@ export default function Navigation({ children, setThemeMode, currentTheme }) {
           )}
           <List>
             {[
-              { title: "All Learners", icon: PeopleOutlineIcon },
-              { title: "Enrolled Learners", icon: AssignmentIndIcon },
-              { title: "Previous Learners", icon: PersonAddDisabledIcon },
-              { title: "Learner Programmes", icon: CastForEducationIcon }
+              {
+                title: "All Learners",
+                icon: PeopleOutlineIcon,
+                url: "/learners"
+              },
+              {
+                title: "Enrolled Learners",
+                icon: AssignmentIndIcon,
+                url: "enrolledLearners"
+              },
+              {
+                title: "Previous Learners",
+                icon: PersonAddDisabledIcon,
+                url: "previousLearners"
+              },
+              {
+                title: "Learner Programmes",
+                icon: CastForEducationIcon,
+                url: "adminLearnersProgrammes"
+              }
             ].map((listItem, index) => (
               <ListItem
                 key={listItem.title}
                 disablePadding
                 sx={{ display: "block" }}
+                onClick={() => navigate(`${listItem.url}`)}
               >
                 <ListItemButton
                   sx={{
@@ -464,13 +481,14 @@ export default function Navigation({ children, setThemeMode, currentTheme }) {
           )}
           <List>
             {[
-              { title: "Users", icon: GroupAddIcon },
-              { title: "Modules", icon: SettingsSuggestIcon }
+              { title: "Users", icon: GroupAddIcon, url: "/users" },
+              { title: "Modules", icon: SettingsSuggestIcon, url: "/modules" }
             ].map((listItem, index) => (
               <ListItem
                 key={listItem.title}
                 disablePadding
                 sx={{ display: "block" }}
+                onClick={() => navigate(`${listItem.url}`)}
               >
                 <ListItemButton
                   sx={{
