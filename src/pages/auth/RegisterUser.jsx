@@ -1,14 +1,16 @@
 import {
   Alert,
+  Backdrop,
   Button,
+  CircularProgress,
   Grid,
-  LinearProgress,
+  // LinearProgress,
   Stack,
   Typography
 } from "@mui/material";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TextFieldWrapper from "../../components/form-components/TextFieldWrapper";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
@@ -20,6 +22,7 @@ import blueLogo from "../../images/blueLogo-transparentBg.png";
 
 const RegisterUser = () => {
   const navigate = useNavigate();
+  const [openBackDrop, setOpenBackDrop] = useState(false);
 
   const { mutate, isLoading, error, isSuccess, data } = useMutation({
     mutationFn: (formData) => {
@@ -27,14 +30,28 @@ const RegisterUser = () => {
       return data;
     },
     onSuccess: (data) => {
+      setOpenBackDrop(false)
       setTimeout(() => {
         navigate("/login");
       }, 2000);
     },
     onError: (error) => {
+      setOpenBackDrop(false)
       console.log(error);
     }
   });
+
+  const handleClose = () => {
+    setOpenBackDrop(false);
+  };
+
+  useEffect(() => {
+    if (isLoading) {
+      setOpenBackDrop(true);
+    } else {
+      setOpenBackDrop(false);
+    }
+  }, [isLoading]);
 
   return (
     <Stack
@@ -56,9 +73,7 @@ const RegisterUser = () => {
           </Alert>
         )}
         {isSuccess && (
-          <Alert sx={{ m: 2, width: "100%" }}>
-            {data.message}{" "}
-          </Alert>
+          <Alert sx={{ m: 2, width: "100%" }}>{data.message} </Alert>
         )}
 
         <Stack height={150} alignItems="center" padding={2}>
@@ -150,7 +165,7 @@ const RegisterUser = () => {
               {() => {
                 return (
                   <Form>
-                    {isLoading && <LinearProgress />}
+                    {/* {isLoading && <LinearProgress />} */}
 
                     {/* <Stack alignItems="center">
                       <Typography
@@ -255,6 +270,20 @@ const RegisterUser = () => {
                           Download Career Guide
                         </Button>
                       </Grid>
+                      <Backdrop
+                        sx={{
+                          color: "#fff",
+                          pointerEvents: "none",
+                          zIndex: (theme) => theme.zIndex.drawer + 1,
+                          borderWidth: 4,
+                          borderColor: "primary.main",
+                          borderStyle: "solid"
+                        }}
+                        open={openBackDrop}
+                        onClick={handleClose}
+                      >
+                        <CircularProgress color="primary" />
+                      </Backdrop>
                     </Grid>
                   </Form>
                 );
