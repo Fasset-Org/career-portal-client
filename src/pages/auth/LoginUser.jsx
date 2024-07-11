@@ -17,7 +17,7 @@ import TextFieldWrapper from "../../components/form-components/TextFieldWrapper"
 import { Navigate, useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import ApiQueries from "../../apiQuries";
-import bgImg from "../../images/Untitled-2.bcecf2a1201a8f598c47.png";
+// import bgImg from "../../images/Untitled-2.bcecf2a1201a8f598c47.png";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import LoginIcon from "@mui/icons-material/Login";
 import blueLogo from "../../images/blueLogo-transparentBg.png";
@@ -74,16 +74,19 @@ const LoginUser = () => {
       direction="row"
       justifyContent="center"
       alignItems="center"
-      sx={{ backgroundColor: "#FFFFFF" }}
+      paddingTop={10}
+      
     >
       <Stack
         width={{ md: "50%", xs: "100%" }}
         // spacing={2}
         alignItems="center"
-        minHeight="86vh"
+        // minHeight="86vh"
         justifyContent="center"
         paddingX={{ md: 5, xs: 4 }}
         py={2}
+        border={1}
+      borderColor='lightgray'
       >
         {error?.response?.status === 404 && (
           <Alert severity="error" color="error" sx={{ width: "100%" }}>
@@ -226,7 +229,7 @@ const LoginUser = () => {
           </Grid>
         </Grid>
       </Stack>
-      <Stack
+      {/* <Stack
         sx={{
           backgroundImage: `url(${bgImg})`,
           backgroundSize: "cover",
@@ -239,7 +242,7 @@ const LoginUser = () => {
           backgroundColor: "#FFFFFF"
         }}
         display={{ md: "block", xs: "none" }}
-      ></Stack>
+      ></Stack> */}
     </Stack>
   );
 };
