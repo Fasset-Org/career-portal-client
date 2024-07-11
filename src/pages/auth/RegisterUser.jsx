@@ -19,6 +19,7 @@ import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import LoginIcon from "@mui/icons-material/Login";
 // import bgImg from "../../images/Untitled-2.bcecf2a1201a8f598c47.png";
 import blueLogo from "../../images/blueLogo-transparentBg.png";
+import SelectFieldWrapper from "../../components/form-components/SelectFieldWrapper";
 
 const RegisterUser = () => {
   const navigate = useNavigate();
@@ -30,16 +31,27 @@ const RegisterUser = () => {
       return data;
     },
     onSuccess: (data) => {
-      setOpenBackDrop(false)
+      setOpenBackDrop(false);
       setTimeout(() => {
         navigate("/login");
       }, 2000);
     },
     onError: (error) => {
-      setOpenBackDrop(false)
+      setOpenBackDrop(false);
       console.log(error);
     }
   });
+
+  const yesNoOptions = [
+    {
+      value: "Yes",
+      label: "Yes"
+    },
+    {
+      value: "No",
+      label: "No"
+    }
+  ];
 
   const handleClose = () => {
     setOpenBackDrop(false);
@@ -114,57 +126,70 @@ const RegisterUser = () => {
                   .oneOf([Yup.ref("password"), null], "Passwords must match"),
                 firstName: Yup.string().required("FirstName required"),
                 lastName: Yup.string().required("LastName required"),
-                identificationNumber: Yup.string()
-                  .required("ID Number is a required field")
-                  .test(
-                    "id_number",
-                    "Please provide valid Identification Number",
-                    function (num) {
-                      let idNumber = num?.toString();
-                      var correct = true;
-                      if (idNumber?.length !== 13 || !!isNaN(parseFloat(num))) {
-                        correct = false;
-                      }
-                      var tempDate = new Date(
-                        idNumber?.substring(0, 2),
-                        idNumber?.substring(2, 4) - 1,
-                        idNumber?.substring(4, 6)
-                      );
-                      if (tempDate instanceof Date) {
-                        correct = true;
-                      } else {
-                        correct = false;
-                      }
-                      var tempTotal = 0;
-                      var checkSum = 0;
-                      var multiplier = 1;
+                rsaId: Yup.string().required("Please select"),
+                identificationNumber: Yup.string().when("rsaId", {
+                  is: "Yes",
+                  then: () =>
+                    Yup.string()
+                      .required("ID number required")
+                      .test(
+                        "rsaId",
+                        "Please provide valid Identification Number",
+                        function (num) {
+                          let idNumber = num?.toString();
+                          var correct = true;
+                          if (
+                            idNumber?.length !== 13 ||
+                            !!isNaN(parseFloat(num))
+                          ) {
+                            correct = false;
+                          }
+                          var tempDate = new Date(
+                            idNumber?.substring(0, 2),
+                            idNumber?.substring(2, 4) - 1,
+                            idNumber?.substring(4, 6)
+                          );
+                          if (tempDate instanceof Date) {
+                            correct = true;
+                          } else {
+                            correct = false;
+                          }
+                          var tempTotal = 0;
+                          var checkSum = 0;
+                          var multiplier = 1;
 
-                      for (var i = 0; i < 13; ++i) {
-                        tempTotal = parseInt(idNumber?.charAt(i)) * multiplier;
-                        if (tempTotal > 9) {
-                          tempTotal =
-                            parseInt(tempTotal.toString().charAt(0)) +
-                            parseInt(tempTotal.toString().charAt(1));
+                          for (var i = 0; i < 13; ++i) {
+                            tempTotal =
+                              parseInt(idNumber?.charAt(i)) * multiplier;
+                            if (tempTotal > 9) {
+                              tempTotal =
+                                parseInt(tempTotal.toString().charAt(0)) +
+                                parseInt(tempTotal.toString().charAt(1));
+                            }
+                            checkSum = checkSum + tempTotal;
+                            multiplier = multiplier % 2 === 0 ? 1 : 2;
+                          }
+                          if (checkSum % 10 !== 0) {
+                            correct = false;
+                          }
+                          if (correct) {
+                            return true;
+                          } else {
+                            return false;
+                          }
                         }
-                        checkSum = checkSum + tempTotal;
-                        multiplier = multiplier % 2 === 0 ? 1 : 2;
-                      }
-                      if (checkSum % 10 !== 0) {
-                        correct = false;
-                      }
-                      if (correct) {
-                        return true;
-                      } else {
-                        return false;
-                      }
-                    }
-                  )
+                      )
+                }),
+                passportNumber: Yup.string().when("rsaId", {
+                  is: "No",
+                  then: () => Yup.string().required("Passport number required")
+                })
               })}
               onSubmit={(values) => {
                 mutate(values);
               }}
             >
-              {() => {
+              {({ values }) => {
                 return (
                   <Form>
                     {/* {isLoading && <LinearProgress />} */}
@@ -199,14 +224,32 @@ const RegisterUser = () => {
                           // sx={{ mt: 1 }}
                         />
                       </Grid>
-                      <Grid item xs={12} md={6}>
-                        {/* <InputLabel>Identification Number</InputLabel> */}
-                        <TextFieldWrapper
-                          name="identificationNumber"
-                          label="Identification Number"
-                          // sx={{ mt: 1 }}
+
+                      <Grid item xs={12} md={12}>
+                        <SelectFieldWrapper
+                          name="rsaId"
+                          label="Do you have RSA ID number?"
+                          options={yesNoOptions}
                         />
                       </Grid>
+
+                      {values.rsaId === "Yes" ? (
+                        <Grid item xs={12} md={12}>
+                          <TextFieldWrapper
+                            name="identificationNumber"
+                            label="Identification Number"
+                          />
+                        </Grid>
+                      ) : values.rsaId === "No" ? (
+                        <Grid item xs={12} md={12}>
+                          <TextFieldWrapper
+                            name="passportNumber"
+                            label="Passport Number"
+                          />
+                        </Grid>
+                      ) : (
+                        ""
+                      )}
 
                       <Grid item xs={12} md={6}>
                         {/* <InputLabel>Email</InputLabel> */}
