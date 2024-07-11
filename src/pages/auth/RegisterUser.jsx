@@ -66,8 +66,8 @@ const RegisterUser = () => {
         alignItems="center"
         justifyContent="center"
         padding={2}
-        border={1}
-        borderColor='lightgray'
+        border={{ md: 1 }}
+        borderColor={{ md: "lightgray" }}
       >
         {error?.response?.status === 409 && (
           <Alert severity="error" color="error" sx={{ m: 2, width: "100%" }}>
