@@ -75,7 +75,6 @@ const LoginUser = () => {
       justifyContent="center"
       alignItems="center"
       paddingTop={10}
-      
     >
       <Stack
         width={{ md: "50%", xs: "100%" }}
@@ -85,8 +84,8 @@ const LoginUser = () => {
         justifyContent="center"
         paddingX={{ md: 5, xs: 4 }}
         py={2}
-        border={1}
-      borderColor='lightgray'
+        border={{ md: 1 }}
+        borderColor={{ md: "lightgray" }}
       >
         {error?.response?.status === 404 && (
           <Alert severity="error" color="error" sx={{ width: "100%" }}>
