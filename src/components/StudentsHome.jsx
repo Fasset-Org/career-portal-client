@@ -86,16 +86,9 @@ const StudentsHome = () => {
               Student Profile
             </Typography> */}
             <Stack spacing={0.5} alignItems="center" justifyContent="center">
-              <Box
-                sx={{
-                  height: 0,
-                  position: "relative",
-                  bottom: 8,
-                  left: { md: 120, xs: 145 }
-                }}
-              >
+              <Stack width="100%" direction="row" justifyContent="end">
                 <EditLearnerBasicInformation userInfo={data} />
-              </Box>
+              </Stack>
               {/* <img
                 src={userPhoto}
                 alt=""
@@ -157,12 +150,25 @@ const StudentsHome = () => {
                 </Typography>
               </Typography>
               <Typography component={Stack} direction="row">
-                <Typography fontWeight="bolder" fontSize={14}>
-                  ID Number :
-                </Typography>{" "}
-                <Typography fontSize={14}>
-                  {data?.studentInformation?.identificationNumber || "None"}
-                </Typography>
+                {data?.studentInformation?.identificationNumber ? (
+                  <>
+                    <Typography fontWeight="bolder" fontSize={14}>
+                      ID Number :
+                    </Typography>{" "}
+                    <Typography fontSize={14}>
+                      {data?.studentInformation?.identificationNumber || "None"}
+                    </Typography>
+                  </>
+                ) : (
+                  <>
+                    <Typography fontWeight="bolder" fontSize={14}>
+                      Passport Number :
+                    </Typography>{" "}
+                    <Typography fontSize={14}>
+                      {data?.studentInformation?.passportNumber || "None"}
+                    </Typography>
+                  </>
+                )}
               </Typography>
 
               <Divider sx={{ width: "100%" }} />
