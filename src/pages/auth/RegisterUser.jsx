@@ -17,7 +17,7 @@ import { useMutation } from "@tanstack/react-query";
 import ApiQueries from "../../apiQuries";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import LoginIcon from "@mui/icons-material/Login";
-import bgImg from "../../images/Untitled-2.bcecf2a1201a8f598c47.png";
+// import bgImg from "../../images/Untitled-2.bcecf2a1201a8f598c47.png";
 import blueLogo from "../../images/blueLogo-transparentBg.png";
 
 const RegisterUser = () => {
@@ -59,13 +59,15 @@ const RegisterUser = () => {
       justifyContent="center"
       alignItems="center"
       sx={{ backgroundColor: "#FFFFFF" }}
+      paddingTop={10}
     >
       <Stack
         width={{ md: "50%", xs: "100%" }}
-        sx={{ minHeight: "86vh" }}
         alignItems="center"
         justifyContent="center"
         padding={2}
+        border={1}
+        borderColor='lightgray'
       >
         {error?.response?.status === 409 && (
           <Alert severity="error" color="error" sx={{ m: 2, width: "100%" }}>
@@ -293,7 +295,7 @@ const RegisterUser = () => {
         </Grid>
       </Stack>
 
-      <Stack
+      {/* <Stack
         sx={{
           backgroundImage: `url(${bgImg})`,
           backgroundSize: "cover",
@@ -306,7 +308,8 @@ const RegisterUser = () => {
           backgroundColor: "#FFFFFF"
         }}
         display={{ md: "block", xs: "none" }}
-      ></Stack>
+        border={3}
+      ></Stack> */}
     </Stack>
   );
 };
