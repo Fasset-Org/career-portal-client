@@ -225,7 +225,7 @@ const RegisterUser = () => {
                         />
                       </Grid>
 
-                      <Grid item xs={12} md={12}>
+                      <Grid item xs={12} md={6}>
                         <SelectFieldWrapper
                           name="rsaId"
                           label="Do you have RSA ID number?"
@@ -234,14 +234,14 @@ const RegisterUser = () => {
                       </Grid>
 
                       {values.rsaId === "Yes" ? (
-                        <Grid item xs={12} md={12}>
+                        <Grid item xs={12} md={6}>
                           <TextFieldWrapper
                             name="identificationNumber"
                             label="Identification Number"
                           />
                         </Grid>
                       ) : values.rsaId === "No" ? (
-                        <Grid item xs={12} md={12}>
+                        <Grid item xs={12} md={6}>
                           <TextFieldWrapper
                             name="passportNumber"
                             label="Passport Number"
