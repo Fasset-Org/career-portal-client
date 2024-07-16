@@ -112,7 +112,9 @@ const RegisterUser = () => {
                 lastName: "",
                 mobileNumber: "",
                 confirmPassword: "",
-                userType: "student"
+                userType: "student",
+                rsaId: "",
+                passportNumber: ""
               }}
               validationSchema={Yup.object().shape({
                 email: Yup.string()
