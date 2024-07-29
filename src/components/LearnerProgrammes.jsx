@@ -24,7 +24,7 @@ const LearnerProgrammes = () => {
 
   const themeMode = theme.palette.mode;
 
-  console.log(themeMode);
+  // console.log(themeMode);
 
   // const handleChange = (event) => {
   //   const {
