@@ -3,7 +3,9 @@ import {
   AccordionDetails,
   AccordionSummary,
   Autocomplete,
+  Button,
   Checkbox,
+  CircularProgress,
   FormControl,
   InputLabel,
   LinearProgress,
@@ -17,16 +19,18 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import { useTheme } from "@mui/material/styles";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import ApiQueries from "../apiQuries";
-import { Formik } from "formik";
+import { Form, Formik } from "formik";
 import * as Yup from "yup";
+import AlertPopup from "./AlertPopup";
 
 const LearnerProgrammes = () => {
   // const [selectedInterest, setSelectedInterest] = React.useState();
   const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
   const checkedIcon = <CheckBoxIcon fontSize="small" />;
   const theme = useTheme();
+  const queryClient = useQueryClient();
 
   const themeMode = theme.palette.mode;
 
@@ -46,11 +50,34 @@ const LearnerProgrammes = () => {
     // staleTime: 1000 * 60 * 60 * 24
   });
 
+  const {
+    mutate,
+    isLoading: loading,
+    isSuccess,
+    error,
+    data: saveData
+  } = useMutation({
+    mutationFn: (formData) => {
+      return ApiQueries.saveLearnerProgrammes(formData);
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries("userInfo");
+    }
+  });
+
   if (isLoading) {
     return <LinearProgress />;
   }
 
-  console.log(data);
+  let studentProgrammes = [];
+
+  if (userData?.studentProgrammes?.length > 0) {
+    studentProgrammes = userData?.studentProgrammes?.map((programme) => {
+      return programme.programmes;
+    });
+  }
+
+  console.log(data, userData?.studentProgrammes);
 
   return (
     <Stack
@@ -95,56 +122,89 @@ const LearnerProgrammes = () => {
         );
       })}
 
+      {error && (
+        <AlertPopup
+          open={true}
+          message={error?.response?.data?.message || "Internal server error"}
+          severity="error"
+        />
+      )}
+      {isSuccess && data && (
+        <AlertPopup open={true} message={saveData.message} />
+      )}
+
       <Formik
         initialValues={{
           userId: userData?.id || "",
-          programmeId: ""
+          programmes: studentProgrammes || "",
+          completed: userData?.studentProgrammes?.length > 0 ? true : false
         }}
         validationSchema={Yup.object().shape({
-          programmeId: Yup.string().required(
-            "Please select atleast one interest"
-          )
+          programmes: Yup.array().required("Please select atleast one interest")
         })}
-        onSubmit={(values) => {}}
+        onSubmit={(values) => {
+          console.log(values);
+          mutate(values);
+        }}
         enableReinitialize
       >
-        {() => {
+        {({ setFieldValue, values, errors }) => {
+          // console.log(errors)
           return (
-            <FormControl sx={{ m: 1 }} fullWidth>
-              <InputLabel id="demo-multiple-checkbox-label">
-                Select your interest(s)
-              </InputLabel>
-              <Autocomplete
-                multiple
-                options={data?.programmes}
-                onChange={(e, value) => {
-                  // setSelectedInterest(value);
-                }}
-                disableCloseOnSelect
-                getOptionLabel={(option) => option.title}
-                renderOption={(props, option, { selected }) => {
-                  return (
-                    <li {...props} key={option.id}>
-                      <Checkbox
-                        icon={icon}
-                        checkedIcon={checkedIcon}
-                        style={{ marginRight: 8 }}
-                        checked={selected}
+            <Form>
+              <Stack spacing={2} alignItems="end">
+                <FormControl fullWidth>
+                  <InputLabel id="demo-multiple-checkbox-label">
+                    Select your interest(s)
+                  </InputLabel>
+                  <Autocomplete
+                    multiple
+                    options={data?.programmes}
+                    defaultValue={
+                      values?.programmes ? values?.programmes : null
+                    }
+                    isOptionEqualToValue={(option, value) => {
+                      return JSON.stringify(option) === JSON.stringify(value);
+                    }}
+                    onChange={(e, value) => {
+                      setFieldValue("programmes", value);
+                    }}
+                    disableCloseOnSelect
+                    getOptionLabel={(option) => option.title}
+                    renderOption={(props, option, { selected }) => {
+                      return (
+                        <li {...props} key={option.id}>
+                          <Checkbox
+                            icon={icon}
+                            checkedIcon={checkedIcon}
+                            style={{ marginRight: 8 }}
+                            checked={selected}
+                          />
+                          {option.title}
+                        </li>
+                      );
+                    }}
+                    renderInput={(params) => (
+                      <TextField
+                        fullWidth
+                        {...params}
+                        // label="Select Interest(s)"
+                        // placeholder="Select Interest(s)"
                       />
-                      {option.title}
-                    </li>
-                  );
-                }}
-                renderInput={(params) => (
-                  <TextField
-                    fullWidth
-                    {...params}
-                    // label="Select Interest(s)"
-                    // placeholder="Select Interest(s)"
+                    )}
                   />
-                )}
-              />
-            </FormControl>
+                </FormControl>
+
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="secondary"
+                  fullWidth={{ md: false, xs: true }}
+                >
+                  {loading ? <CircularProgress /> : "Save"}
+                </Button>
+              </Stack>
+            </Form>
           );
         }}
       </Formik>
