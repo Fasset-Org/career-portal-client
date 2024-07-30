@@ -52,7 +52,7 @@ export default function AboutUserInfo() {
   };
 
   return (
-    <Stack spacing={2} width="100%">
+    <Stack spacing={2} width="100%" mt={6}>
       <Tabs
         value={value}
         onChange={handleChange}
