@@ -1,4 +1,5 @@
 import {
+  Alert,
   // Alert,
   // AlertTitle,
   Box,
@@ -19,6 +20,7 @@ import LearnerInformation from "./LearnerInformation";
 
 const StudentsHome = () => {
   const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
 
   const { data } = useQuery({
     queryKey: ["userInfo"],
@@ -37,6 +39,12 @@ const StudentsHome = () => {
           alignItems="center"
           spacing={2}
         >
+          {!isDesktop && data?.profileProgress < 100 && (
+            <Alert color="error" severity="error">
+              Please completed required profile information to be considered for
+              any interest(s)
+            </Alert>
+          )}
           <Stack spacing={1} width="100%">
             <Typography
               color="text.primary"
