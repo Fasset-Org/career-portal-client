@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const API_BASE_URL = "https://career-portal-api.fasset.org.za/api/v1";
+// const API_BASE_URL = "http://localhost:8000/api/v1";
 
 const token = localStorage.getItem("token");
 
@@ -144,6 +145,12 @@ const ApiQueries = {
 
   addDocument: async (formData) => {
     const resp = await axiosInstance.post(`/student/addDocument`, formData);
+
+    return resp?.data;
+  },
+
+  getAllProgrammes: async () => {
+    const resp = await axiosInstance.get(`/student/getAllProgrammes`);
 
     return resp?.data;
   }
