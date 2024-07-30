@@ -73,7 +73,7 @@ const StudentsHome = () => {
               width: "100%",
               p: 2,
               // textAlign: "center"
-              height: 615
+              height: 700
             }}
             elevation={5}
           >
@@ -225,6 +225,7 @@ const StudentsHome = () => {
           mt={2}
           spacing={2}
           alignItems="end"
+          // height={700}
         >
           {/* {!useMediaQuery(theme.breakpoints.down("md")) && (
             <Button
