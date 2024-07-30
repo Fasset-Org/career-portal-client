@@ -33,7 +33,7 @@ const ProfessionalsSkills = () => {
 
   return (
     <Stack
-      height={518}
+      height={605}
       padding={2}
       spacing={2}
       component={Paper}
