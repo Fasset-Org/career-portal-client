@@ -8,7 +8,7 @@ import CardMembershipIcon from "@mui/icons-material/CardMembership";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import SubjectIcon from "@mui/icons-material/Subject";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
-import { Paper, Stack, Typography } from "@mui/material";
+import { Alert, Paper, Stack, Typography, useMediaQuery } from "@mui/material";
 import PropTypes from "prop-types";
 import BasicEducation from "./BasicEducation";
 import TertiaryEducation from "./TertiaryEducation";
@@ -16,6 +16,9 @@ import ProfessionalsSkills from "./ProfessionalsSkills";
 import CertificateAndTraining from "./CertificateAndTraining";
 import Attachments from "./Attachments";
 import LearnerProgrammes from "./LearnerProgrammes";
+import { useQuery } from "@tanstack/react-query";
+import ApiQueries from "../apiQuries";
+import { useTheme } from "@mui/material/styles";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -46,13 +49,32 @@ function a11yProps(index) {
 
 export default function AboutUserInfo() {
   const [value, setValue] = React.useState(0);
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+  const { data } = useQuery({
+    queryKey: ["userInfo"],
+    queryFn: () => {
+      return ApiQueries.userInfo();
+    }
+
+    // staleTime: 1000 * 60 * 60 * 24
+  });
+
+  console.log(data);
+
   return (
-    <Stack spacing={2} width="100%" mt={6}>
+    <Stack spacing={2} width="100%" mt={-1.5}>
+      {isDesktop && data?.profileProgress < 100 && (
+        <Alert color="error" severity="error">
+          Please completed required profile information to be considered for any
+          interest(s)
+        </Alert>
+      )}
       <Tabs
         value={value}
         onChange={handleChange}
