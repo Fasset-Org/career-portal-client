@@ -313,8 +313,14 @@ const RegisterUser = () => {
                           color="secondary"
                           endIcon={<AppRegistrationIcon />}
                           sx={{ fontWeight: "bolder", width: "100%" }}
+                          onClick={() => {
+                            window.open(
+                              "https://online.fliphtml5.com/cqpoc/fiww/#p=1",
+                              "_blank"
+                            );
+                          }}
                         >
-                          Download Career Guide
+                          View Career Guide
                         </Button>
                       </Grid>
                       <Backdrop
