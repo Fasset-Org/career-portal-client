@@ -2,7 +2,7 @@
 // import ApiQueries from "../apiQuries";
 // import StudentsHome from "../components/StudentsHome";
 import { Button, Stack, Typography } from "@mui/material";
-import bgImg from "../images/Untitled-2.bcecf2a1201a8f598c47.png";
+import bgImg from "../images/thumbnail_PORTAL ARTWORK.001.jpg";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import LoginIcon from "@mui/icons-material/Login";
 import { useNavigate } from "react-router-dom";
@@ -29,6 +29,8 @@ const Home = () => {
       justifyContent="center"
       alignItems="center"
       padding={2}
+      // border={1}
+      mt={8.2}
       // sx={{ backgroundColor: "#FFFFFF" }}
     >
       <Stack
@@ -124,26 +126,34 @@ const Home = () => {
             color="secondary"
             endIcon={<AppRegistrationIcon />}
             sx={{ fontWeight: "bolder" }}
+            onClick={() => {
+              window.open(
+                "https://online.fliphtml5.com/cqpoc/fiww/#p=1",
+                "_blank"
+              );
+            }}
           >
-            Download Career Guide
+            View Career Guide
           </Button>
         </Stack>
       </Stack>
       <Stack
-        sx={{
-          backgroundImage: `url(${bgImg})`,
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-          backgroundPositionX: "right",
-          backgroundPositionY: "center",
-          minHeight: "87vh",
-          maxHeight: "110vh",
-          width: "50%"
-          // backgroundColor: "#FFFFFF"
-        }}
+        // sx={{
+        //   backgroundImage: `url(${bgImg})`,
+        //   backgroundSize: "cover",
+        //   backgroundRepeat: "no-repeat",
+        //   backgroundPositionX: "right",
+        //   backgroundPositionY: "center",
+        //   minHeight: "87vh",
+        //   maxHeight: "110vh",
+        //   width: "50%"
+        //   // backgroundColor: "#FFFFFF"
+        // }}
         display={{ md: "block", xs: "none" }}
         height={{ md: "auto", xs: 0 }}
-      ></Stack>
+      >
+        <img src={bgImg} alt="" />
+      </Stack>
     </Stack>
   );
 };
