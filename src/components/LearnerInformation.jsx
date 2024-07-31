@@ -68,7 +68,7 @@ export default function AboutUserInfo() {
   console.log(data);
 
   return (
-    <Stack spacing={2} width="100%" mt={-1.5}>
+    <Stack spacing={2} width="100%" mt={!data?.profileProgress ? -1.5 : 6}>
       {isDesktop && data?.profileProgress < 100 && (
         <Alert color="error" severity="error">
           Please completed required profile information to be considered for any
