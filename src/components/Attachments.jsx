@@ -118,7 +118,10 @@ const Attachments = () => {
           </Table>
         </TableContainer>
       ) : (
-        <Alert severity="error">Documents are required</Alert>
+        <Alert severity="error">
+          Please note that matric, id copy, and qualification attachments are
+          required
+        </Alert>
       )}
     </Stack>
   );
