@@ -21,6 +21,8 @@ import PreviousLearners from "./components/admin/activities/PreviousLearners";
 import Users from "./components/admin/user-management/Users";
 import Modules from "./components/admin/user-management/Modules";
 import AdminLearnerProgrammes from "./components/admin/activities/AdminLearnerProgrammes";
+import ForgotPassword from "./pages/auth/ForgotPassword";
+import ResetPassword from "./pages/auth/ResetPassword";
 
 function App() {
   const [themeMode, setThemeMode] = useState(true);
@@ -44,6 +46,11 @@ function App() {
               <Route path="/home" element={<Home />} />
               <Route path="/login" element={<LoginUser />} />
               <Route path="/register" element={<RegisterUser />} />
+              <Route path="/forgotPassword" element={<ForgotPassword />} />
+              <Route
+                path="/resetPassword/:resetToken"
+                element={<ResetPassword />}
+              />
 
               <Route path="/" element={<PrivateRoute />}>
                 {/* Learner Routes */}
