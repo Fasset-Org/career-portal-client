@@ -71,7 +71,8 @@ const RegisterUser = () => {
       justifyContent="center"
       alignItems="center"
       sx={{ backgroundColor: "#FFFFFF" }}
-      paddingTop={10}
+      mt={8.5}
+      height="90vh"
     >
       <Stack
         width={{ md: "50%", xs: "100%" }}
@@ -80,6 +81,7 @@ const RegisterUser = () => {
         padding={2}
         border={{ md: 1 }}
         borderColor={{ md: "lightgray" }}
+        py={{ md: 10, xs: 2 }}
       >
         {error?.response?.status === 409 && (
           <Alert severity="error" color="error" sx={{ m: 2, width: "100%" }}>
