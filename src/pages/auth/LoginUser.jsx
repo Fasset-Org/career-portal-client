@@ -74,7 +74,9 @@ const LoginUser = () => {
       direction="row"
       justifyContent="center"
       alignItems="center"
-      paddingTop={10}
+      mt={8.5}
+      height="90vh"
+      // border={1}
     >
       <Stack
         width={{ md: "50%", xs: "100%" }}
@@ -83,9 +85,11 @@ const LoginUser = () => {
         // minHeight="86vh"
         justifyContent="center"
         paddingX={{ md: 5, xs: 4 }}
-        py={2}
+        py={{ md: 10, xs: 2 }}
         border={{ md: 1 }}
         borderColor={{ md: "lightgray" }}
+        // component={{ md: Paper, Stack}}
+        sx={{ backgroundColor: "#FFFFFF" }}
       >
         {error?.response?.status === 404 && (
           <Alert severity="error" color="error" sx={{ width: "100%" }}>
@@ -161,6 +165,7 @@ const LoginUser = () => {
                           <InputLabel>Password</InputLabel>
                           <Link
                             sx={{ textDecoration: "none", cursor: "pointer" }}
+                            onClick={() => navigate("/forgotPassword")}
                           >
                             Forgot Password
                           </Link>
