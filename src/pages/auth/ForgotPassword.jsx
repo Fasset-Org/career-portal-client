@@ -4,8 +4,18 @@ import blueLogo from "../../images/blueLogo-transparentBg.png";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
 import TextFieldWrapper from "../../components/form-components/TextFieldWrapper";
+import { useMutation } from "@tanstack/react-query";
+import ApiQueries from "../../apiQuries";
 
 const ForgotPassword = ({ currentTheme }) => {
+  const { data, mutate } = useMutation({
+    mutationFn: (formData) => {
+      return ApiQueries.sendResetPasswordEmail(formData);
+    }
+  });
+
+  console.log(data);
+
   return (
     <Stack
       direction="row"
@@ -55,18 +65,21 @@ const ForgotPassword = ({ currentTheme }) => {
             <Formik
               initialValues={{
                 email: "",
-                password: ""
+                // password: ""
               }}
               validationSchema={Yup.object().shape({
                 email: Yup.string()
                   .required("Email required")
                   .email("Please prodive a valid email format"),
-                password: Yup.string().required("Password required")
+                // password: Yup.string().required("Password required")
                 // .min(8, "At least 8 characters required for password")
               })}
-              onSubmit={(values) => {}}
+              onSubmit={(values) => {
+                mutate(values);
+              }}
             >
-              {() => {
+              {({errors}) => {
+                console.log(errors)
                 return (
                   <Form>
                     /{" "}
@@ -76,7 +89,7 @@ const ForgotPassword = ({ currentTheme }) => {
                         <TextFieldWrapper
                           name="email"
                           label="Email"
-                          type="password"
+                          type="email"
                           sx={{ mt: 2 }}
                           fullWidth
                         />
