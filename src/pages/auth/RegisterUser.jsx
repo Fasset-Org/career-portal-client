@@ -20,6 +20,7 @@ import LoginIcon from "@mui/icons-material/Login";
 // import bgImg from "../../images/Untitled-2.bcecf2a1201a8f598c47.png";
 import blueLogo from "../../images/blueLogo-transparentBg.png";
 import SelectFieldWrapper from "../../components/form-components/SelectFieldWrapper";
+import FASSET_POLICY from "../../images/FASSET POPIA POLICY.pdf";
 
 const RegisterUser = () => {
   const navigate = useNavigate();
@@ -284,6 +285,29 @@ const RegisterUser = () => {
                           label="Confirm Password"
                           // sx={{ mt: 1 }}
                         />
+                      </Grid>
+
+                      <Grid item xs={12} md={12}>
+                        <Typography>
+                          By registering in and completing your profile, you agree
+                          that you have read,understood and accepted that you
+                          will be bounded by the terms of use of the{" "}
+                          <a
+                            href={FASSET_POLICY}
+                            style={{
+                              color: "#163683",
+                              cursor: "pointer",
+                              fontWeight: 600
+                            }}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            POPI Act No.4 2013.
+                          </a>{" "}
+                          FASSET endeavours to take all reasonable precautions
+                          to ensure that any information provided, is only used
+                          for the purposes it has been provided.
+                        </Typography>
                       </Grid>
 
                       <Grid item xs={12} md={12}>
