@@ -21,6 +21,7 @@ import ApiQueries from "../../apiQuries";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import LoginIcon from "@mui/icons-material/Login";
 import blueLogo from "../../images/blueLogo-transparentBg.png";
+import FASSET_POLICY from "../../images/FASSET POPIA POLICY.pdf";
 const LoginUser = () => {
   const navigate = useNavigate();
   const [openBackDrop, setOpenBackDrop] = useState(false);
@@ -176,6 +177,29 @@ const LoginUser = () => {
                           label="Password"
                           sx={{ mt: 2 }}
                         />
+                      </Grid>
+
+                      <Grid item xs={12} md={12}>
+                        <Typography>
+                          By loging in and completing your profile, you agree
+                          that you have read,understood and accepted that you
+                          will be bounded by the terms of use of the{" "}
+                          <a
+                            href={FASSET_POLICY}
+                            style={{
+                              color: "#163683",
+                              cursor: "pointer",
+                              fontWeight: 600
+                            }}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            POPI Act No.4 2013.
+                          </a>{" "}
+                          FASSET endeavours to take all reasonable precautions
+                          to ensure that any information provided, is only used
+                          for the purposes it has been provided.
+                        </Typography>
                       </Grid>
 
                       <Grid item xs={12} md={12}>
