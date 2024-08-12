@@ -39,6 +39,12 @@ const ApiQueries = {
     return resp?.data.user;
   },
 
+  sendResetPasswordEmail: async (formData) => {
+    const resp = await axiosInstance.post(`/auth/forgotPassword`, formData);
+
+    return resp?.data;
+  },
+
   editBasicInformation: async (formData) => {
     const resp = await axiosInstance.put(
       `/student/editBasicInformation/${formData.id}`,
