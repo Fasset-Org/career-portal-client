@@ -1,0 +1,33 @@
+name: Deploy Staging Environment
+
+on:
+  push:
+    branches:
+      - staging
+
+jobs:
+  build_and_deploy_job:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16" # Adjust the Node version as necessary
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy to Azure Static Web Apps
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_ICY_MUD_0E73B3B0F }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }} # Required for GitHub Actions
+          action: "upload"
+          app_location: "/" # Location of your app source code
+          api_location: "api" # Location of your API source code, if any
+          output_location: "build" # Location of the build output directory
