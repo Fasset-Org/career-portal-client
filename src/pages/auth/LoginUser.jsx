@@ -76,7 +76,7 @@ const LoginUser = () => {
       justifyContent="center"
       alignItems="center"
       mt={8.5}
-      height="90vh"
+      minHeight="90vh"
       // border={1}
     >
       <Stack
