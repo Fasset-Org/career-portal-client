@@ -233,7 +233,7 @@ const LoginUser = () => {
                           sx={{ fontWeight: "bolder", width: "100%" }}
                           onClick={() => {
                             window.open(
-                              "https://online.fliphtml5.com/cqpoc/fiww/#p=1",
+                              "https://mogulcollective.com/next-big-thing-language/",
                               "_blank"
                             );
                           }}
