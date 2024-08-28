@@ -45,6 +45,18 @@ const ApiQueries = {
     return resp?.data;
   },
 
+  verifyResetToken: async (token) => {
+    const resp = await axiosInstance.get(`/auth/verifyResetToken/${token}`);
+
+    return resp?.data;
+  },
+
+  resetPasswordUser: async (formData) => {
+    const resp = await axiosInstance.post(`/auth/resetPassword`, formData);
+
+    return resp?.data;
+  },
+
   editBasicInformation: async (formData) => {
     const resp = await axiosInstance.put(
       `/student/editBasicInformation/${formData.id}`,

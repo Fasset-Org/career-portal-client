@@ -73,7 +73,7 @@ const RegisterUser = () => {
       alignItems="center"
       sx={{ backgroundColor: "#FFFFFF" }}
       mt={8.5}
-      height="90vh"
+      minHeight="90vh"
     >
       <Stack
         width={{ md: "50%", xs: "100%" }}

@@ -1,4 +1,12 @@
-import { Button, Grid, InputLabel, Stack, Typography } from "@mui/material";
+import {
+  Alert,
+  Button,
+  CircularProgress,
+  Grid,
+  InputLabel,
+  Stack,
+  Typography
+} from "@mui/material";
 import React from "react";
 import blueLogo from "../../images/blueLogo-transparentBg.png";
 import * as Yup from "yup";
@@ -8,13 +16,15 @@ import { useMutation } from "@tanstack/react-query";
 import ApiQueries from "../../apiQuries";
 
 const ForgotPassword = ({ currentTheme }) => {
-  const { data, mutate } = useMutation({
+
+  const { data, mutate, error, isSuccess, isError, isLoading } = useMutation({
     mutationFn: (formData) => {
       return ApiQueries.sendResetPasswordEmail(formData);
+    },
+    onSuccess: (data) => {
+
     }
   });
-
-  console.log(data);
 
   return (
     <Stack
@@ -22,7 +32,7 @@ const ForgotPassword = ({ currentTheme }) => {
       justifyContent="center"
       alignItems="center"
       mt={8.5}
-      height="90vh"
+      minHeight="90vh"
       // border={1}
     >
       <Stack
@@ -38,7 +48,7 @@ const ForgotPassword = ({ currentTheme }) => {
         // component={{ md: Paper, Stack}}
         sx={{ backgroundColor: "#FFFFFF" }}
       >
-        {/* {error?.response?.status === 404 && (
+        {isError && (
           <Alert severity="error" color="error" sx={{ width: "100%" }}>
             {error?.response?.data?.message}
           </Alert>
@@ -47,7 +57,7 @@ const ForgotPassword = ({ currentTheme }) => {
           <Alert severity="success" color="success" sx={{ width: "100%" }}>
             {data.message}
           </Alert>
-        )} */}
+        )}
 
         <Stack height={150} alignItems="center" padding={2}>
           <img src={blueLogo} alt="" height={150} width={150} />
@@ -64,13 +74,13 @@ const ForgotPassword = ({ currentTheme }) => {
           <Grid item xs={12} md={12}>
             <Formik
               initialValues={{
-                email: "",
+                email: ""
                 // password: ""
               }}
               validationSchema={Yup.object().shape({
                 email: Yup.string()
                   .required("Email required")
-                  .email("Please prodive a valid email format"),
+                  .email("Please prodive a valid email format")
                 // password: Yup.string().required("Password required")
                 // .min(8, "At least 8 characters required for password")
               })}
@@ -78,8 +88,8 @@ const ForgotPassword = ({ currentTheme }) => {
                 mutate(values);
               }}
             >
-              {({errors}) => {
-                console.log(errors)
+              {({ errors }) => {
+                console.log(errors);
                 return (
                   <Form>
                     /{" "}
@@ -102,7 +112,11 @@ const ForgotPassword = ({ currentTheme }) => {
                           type="submit"
                           // onClick={(e) => navigate("/fms/dashboard")}
                         >
-                          Send Reset Email
+                          {isLoading ? (
+                            <CircularProgress color="secondary" />
+                          ) : (
+                            "Send Reset Email"
+                          )}
                         </Button>
                       </Grid>
                     </Grid>
