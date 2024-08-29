@@ -57,6 +57,21 @@ const Learners = () => {
           </Stack>
         );
       }
+    },
+    {
+      field: "basicEducation",
+      headerName: "Basic Education",
+      editable: true,
+      width: 300,
+      renderCell: (params) => {
+        return (
+          <Stack height="100%" justifyContent="center">
+            <Typography sx={{ textWrap: "wrap", fontSize: 11 }}>
+              {params.row.basicEducation}
+            </Typography>
+          </Stack>
+        );
+      }
     }
   ];
 
@@ -69,7 +84,10 @@ const Learners = () => {
             ...student.studentInformation,
             studentAddress:
               student?.studentAddress &&
-              Object.values(student?.studentAddress).join(", ")
+              Object.values(student?.studentAddress).join(" "),
+            basicEducation:
+              student?.basicEducation &&
+              Object.values(student?.basicEducation).join(" ")
           };
         })
       );
@@ -87,16 +105,17 @@ const Learners = () => {
       <Typography sx={{ fontSize: 20, fontWeight: "bolder" }}>
         Learners
       </Typography>
-      <div style={{ height: 680, width: "100%", overflow: "auto" }}>
+      <div style={{ height: 670, width: "100%", overflow: "auto", border: 1 }}>
         <DataGrid
           rows={rows.length > 0 && rows}
           columns={columns}
           autoHeight
+          getRowHeight={() => Math.max(50, 'auto')}
           autoHeightMax={400}
           initialState={{
             pagination: {
               paginationModel: {
-                pageSize: 5
+                pageSize: 10
               }
             }
           }}
