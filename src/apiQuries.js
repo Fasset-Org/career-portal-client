@@ -173,6 +173,14 @@ const ApiQueries = {
     return resp?.data;
   },
 
+  // Admin funtions
+
+  getAllStudents: async () => {
+    const resp = await axiosInstance.get(`/admin/getAllStudents`);
+
+    return resp?.data;
+  },
+
   saveLearnerProgrammes: async (formData) => {
     const resp = await axiosInstance.post(
       `/student/saveLearnerProgrammes`,
