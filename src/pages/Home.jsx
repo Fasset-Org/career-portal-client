@@ -128,7 +128,7 @@ const Home = () => {
             sx={{ fontWeight: "bolder" }}
             onClick={() => {
               window.open(
-                "https://online.fliphtml5.com/cqpoc/fiww/#p=1",
+                "https://mogulcollective.com/next-big-thing-language/",
                 "_blank"
               );
             }}
