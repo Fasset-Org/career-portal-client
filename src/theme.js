@@ -128,7 +128,7 @@ export const themeLight = createTheme({
     }
   },
   typography: {
-    fontSize: 12,
-    fontFamily: "Roboto, Reenie Beanie"
+    fontSize: 11,
+    fontFamily: "Arial"
   }
 });
