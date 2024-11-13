@@ -32,8 +32,7 @@ import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import PersonAddDisabledIcon from "@mui/icons-material/PersonAddDisabled";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import SettingsSuggestIcon from "@mui/icons-material/SettingsSuggest";
-import logo2 from "../../images/blue_bg_only_logo.png";
-import Avatar from "@mui/material/Avatar";
+import logo from "../../images/horizontail-white-logo.jpg";
 import { useNavigate } from "react-router-dom";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
@@ -208,7 +207,9 @@ export default function Navigation({ children, setThemeMode, currentTheme }) {
             </>
           )}
 
-          <Stack direction="row" alignItems="center" width="100%">
+          <img src={logo} width={160} height={65} alt="" />
+
+          {/* <Stack direction="row" alignItems="center" width="100%">
             <IconButton>
               <Avatar src={logo2} />
             </IconButton>
@@ -235,7 +236,7 @@ export default function Navigation({ children, setThemeMode, currentTheme }) {
                 <i>Make the future count</i>
               </Typography>
             </Stack>
-          </Stack>
+          </Stack> */}
 
           <Box sx={{ mx: "auto" }}></Box>
           <Stack direction="row" spacing={2}>
