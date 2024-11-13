@@ -112,10 +112,10 @@ const LearnerProgrammes = () => {
             <AccordionDetails>
               <Stack spacing={2}>
                 <Typography>{programme.description}</Typography>
-                <Typography component={Stack} direction="row" spacing={2}>
+                {/* <Typography component={Stack} direction="row" spacing={2}>
                   <Typography fontWeight="bolder">Duration:</Typography>
                   <Typography>{programme.duration}</Typography>
-                </Typography>
+                </Typography> */}
               </Stack>
             </AccordionDetails>
           </Accordion>
