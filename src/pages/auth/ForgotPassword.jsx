@@ -16,14 +16,11 @@ import { useMutation } from "@tanstack/react-query";
 import ApiQueries from "../../apiQuries";
 
 const ForgotPassword = ({ currentTheme }) => {
-
   const { data, mutate, error, isSuccess, isError, isLoading } = useMutation({
     mutationFn: (formData) => {
       return ApiQueries.sendResetPasswordEmail(formData);
     },
-    onSuccess: (data) => {
-
-    }
+    onSuccess: (data) => {}
   });
 
   return (
@@ -92,7 +89,7 @@ const ForgotPassword = ({ currentTheme }) => {
                 console.log(errors);
                 return (
                   <Form>
-                    /{" "}
+                    {" "}
                     <Grid container spacing={2}>
                       <Grid item xs={12} md={12}>
                         <InputLabel>Email</InputLabel>
