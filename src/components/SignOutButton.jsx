@@ -7,6 +7,7 @@ import {
   DialogContent,
   DialogTitle,
   IconButton,
+  Stack,
   Typography,
   useMediaQuery
 } from "@mui/material";
@@ -45,23 +46,34 @@ export const SignOutButton = () => {
     <div>
       <Tooltip title="Logout">
         {isDesktop ? (
-          <IconButton
-            color="error"
-            size="medium"
-            aria-label="logout"
+          <Stack
+            direction="row"
+            spacing={1}
+            alignItems="center"
             onClick={handleClickOpen}
           >
-            <LogoutIcon fontSize="medium" />
-          </IconButton>
+            <Typography fontSize={15} fontWeight="bolder">
+              Signout
+            </Typography>
+            <IconButton color="error" size="medium" aria-label="logout">
+              <LogoutIcon fontSize="medium" />
+            </IconButton>
+          </Stack>
         ) : (
-          <IconButton
-            color="error"
-            size="large"
-            aria-label="logout"
+          <Stack
+            direction="row"
+            spacing={1}
+            alignItems="center"
+            justifyContent="center"
             onClick={handleClickOpen}
           >
-            <LogoutIcon fontSize="large" />
-          </IconButton>
+            <Typography fontSize={15} fontWeight="bolder">
+              Signout
+            </Typography>
+            <IconButton color="error" size="large" aria-label="logout">
+              <LogoutIcon fontSize="large" />
+            </IconButton>
+          </Stack>
         )}
       </Tooltip>
       <Dialog
