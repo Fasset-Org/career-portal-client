@@ -14,6 +14,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import {
+  Avatar,
   Button,
   Menu,
   MenuItem,
@@ -40,6 +41,7 @@ import { useTheme } from "@mui/material/styles";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CastForEducationIcon from "@mui/icons-material/CastForEducation";
 import Close from "@mui/icons-material/Close";
+import { DeleteAccountModal } from "../DeleteAccountModal";
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open"
 })(({ theme, open }) => ({
@@ -141,6 +143,16 @@ export default function Navigation({ children, setThemeMode, currentTheme }) {
     setAnchorEl(null);
   };
 
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
   const { data } = useQuery({
     queryKey: ["userInfo"],
     queryFn: () => {
@@ -159,6 +171,8 @@ export default function Navigation({ children, setThemeMode, currentTheme }) {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  console.log(data);
 
   return (
     <Box
@@ -208,36 +222,6 @@ export default function Navigation({ children, setThemeMode, currentTheme }) {
           )}
 
           <img src={logo} width={160} height={65} alt="" />
-
-          {/* <Stack direction="row" alignItems="center" width="100%">
-            <IconButton>
-              <Avatar src={logo2} />
-            </IconButton>
-            <Stack width="100%">
-              <Typography
-                variant="h6"
-                noWrap
-                component="div"
-                // textTransform="uppercase"
-                fontSize={14}
-                // onClick={() => navigate("/home")}
-                textTransform="uppercase"
-                fontWeight="bolder"
-                // letterSpacing={6}
-              >
-                LEARNER PORTAL
-              </Typography>
-              <Typography
-                fontSize={9}
-                // border={1}
-                sx={{ position: "relative", bottom: 5, height: 10 }}
-                letterSpacing={2}
-              >
-                <i>Make the future count</i>
-              </Typography>
-            </Stack>
-          </Stack> */}
-
           <Box sx={{ mx: "auto" }}></Box>
           <Stack direction="row" spacing={2}>
             <Stack
@@ -287,21 +271,45 @@ export default function Navigation({ children, setThemeMode, currentTheme }) {
                       </>
                     )}
                   </Tooltip>
-                  {/* <Avatar
-                    variant="circular"
-                    sx={{
-                      bgcolor: "#FFFFFF",
-                      color: "primary.main",
-                      fontWeight: "bolder",
-                      border: 1,
-                      borderColor: "lightgray",
-                      width: 30,
-                      height: 30
-                    }}
-                  >
-                    {data?.firstName?.charAt(0)}
-                  </Avatar> */}
-                  <SignOutButton />
+
+                  {/* <SignOutButton /> */}
+
+                  <Box sx={{ flexGrow: 0 }}>
+                    <Tooltip title="Open">
+                      <IconButton
+                        onClick={handleOpenUserMenu}
+                        sx={{ p: 0, bgcolor: "primary.main" }}
+                      >
+                        <Avatar>
+                          {data?.firstName.charAt(0).toUpperCase()}
+                        </Avatar>
+                      </IconButton>
+                    </Tooltip>
+                    <Menu
+                      sx={{ mt: "45px" }}
+                      id="menu-appbar"
+                      anchorEl={anchorElUser}
+                      anchorOrigin={{
+                        vertical: "top",
+                        horizontal: "right"
+                      }}
+                      keepMounted
+                      transformOrigin={{
+                        vertical: "top",
+                        horizontal: "right"
+                      }}
+                      open={Boolean(anchorElUser)}
+                      onClose={handleCloseUserMenu}
+                    >
+                      <MenuItem onClick={handleCloseUserMenu}>
+                        <SignOutButton />
+                      </MenuItem>
+
+                      <MenuItem>
+                        <DeleteAccountModal id={data.id} />
+                      </MenuItem>
+                    </Menu>
+                  </Box>
                 </>
               ) : isDesktop ? (
                 <>
@@ -395,22 +403,7 @@ export default function Navigation({ children, setThemeMode, currentTheme }) {
 
       {data && data.userType === "admin" && (
         <Drawer variant="permanent" open={open}>
-          <DrawerHeader sx={{ backgroundColor: "primary.dark" }}>
-            {/* <img src={logo} alt="" width={40} height={40} />
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{
-                ml: 2,
-                width: { xs: "100%", md: "fit-content" },
-                textAlign: "center",
-                color: "#FFFFFF"
-              }}
-            >
-              Learner Portal
-            </Typography> */}
-          </DrawerHeader>
+          <DrawerHeader sx={{ backgroundColor: "primary.dark" }}></DrawerHeader>
           <Divider />
           {open && (
             <Stack paddingX={2} pt={2} alignItems="center">
