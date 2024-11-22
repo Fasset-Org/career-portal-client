@@ -33,6 +33,14 @@ const ApiQueries = {
     return data?.resp;
   },
 
+  deleteUser: async (id) => {
+    const resp = await axiosInstance.delete(
+      `${API_BASE_URL}/auth/deleteUser/${id}`
+    );
+
+    return resp?.data;
+  },
+
   userInfo: async () => {
     const resp = await axiosInstance.get(`/auth/isUserLoggedIn`);
 
