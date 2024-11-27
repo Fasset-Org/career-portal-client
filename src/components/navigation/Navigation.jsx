@@ -41,7 +41,7 @@ import { useTheme } from "@mui/material/styles";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CastForEducationIcon from "@mui/icons-material/CastForEducation";
 import Close from "@mui/icons-material/Close";
-import { DeleteAccountModal } from "../DeleteAccountModal";
+// import { DeleteAccountModal } from "../DeleteAccountModal";
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open"
 })(({ theme, open }) => ({
@@ -305,9 +305,9 @@ export default function Navigation({ children, setThemeMode, currentTheme }) {
                         <SignOutButton />
                       </MenuItem>
 
-                      <MenuItem>
+                      {/* <MenuItem>
                         <DeleteAccountModal id={data.id} />
-                      </MenuItem>
+                      </MenuItem> */}
                     </Menu>
                   </Box>
                 </>
