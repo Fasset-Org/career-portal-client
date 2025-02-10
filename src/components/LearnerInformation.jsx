@@ -25,7 +25,11 @@ function TabPanel(props) {
   return (
     <div role="tabpanel" hidden={value !== index} {...other}>
       {value === index && (
-        <Stack component={Paper} minHeight={"70.2vh"} sx={{ borderRadius: 0 }}>
+        <Stack
+          component={Paper}
+          height={"70.2vh"}
+          sx={{ borderRadius: 0, ovoverflowY: "auto" }}
+        >
           <Typography>{children}</Typography>
         </Stack>
       )}
