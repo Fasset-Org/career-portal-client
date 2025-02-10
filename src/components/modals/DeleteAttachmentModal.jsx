@@ -35,7 +35,7 @@ export const DeleteAttachmentModal = ({ id }) => {
 
   const { mutate, isError, error, isLoading, isSuccess, data } = useMutation({
     mutationFn: async (id) => {
-      return ApiQueries.deleteCertification(id);
+      return ApiQueries.deleteDocument(id);
     },
     onSuccess: (data) => {
       setTimeout(() => {
