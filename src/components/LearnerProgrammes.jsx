@@ -77,15 +77,11 @@ const LearnerProgrammes = () => {
     });
   }
 
-  console.log(data, userData?.studentProgrammes);
-
   return (
     <Stack
-      height={605}
       padding={2}
       spacing={2}
-      component={Paper}
-      sx={{ overflowY: "auto", borderRadius: 0 }}
+      sx={{ overflowY: "auto", borderRadius: 0, height:  '70.2vh'}}
     >
       <Typography sx={{ fontSize: 20, fontWeight: "bolder" }}>
         Learner Interventions
