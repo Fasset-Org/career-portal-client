@@ -9,7 +9,6 @@ import {
   FormControl,
   InputLabel,
   LinearProgress,
-  Paper,
   Stack,
   TextField,
   Typography
