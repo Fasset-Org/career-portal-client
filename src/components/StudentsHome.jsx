@@ -1,16 +1,4 @@
-import {
-  Alert,
-  // Alert,
-  // AlertTitle,
-  Box,
-  Card,
-  Divider,
-  LinearProgress,
-  Stack,
-  Typography,
-  useMediaQuery,
-  useTheme
-} from "@mui/material";
+import { Box, Card, Divider, Stack, Typography } from "@mui/material";
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import ApiQueries from "../apiQuries";
@@ -19,8 +7,7 @@ import EditAddressInforModal from "./modals/AddressInforModal";
 import LearnerInformation from "./LearnerInformation";
 
 const StudentsHome = () => {
-  const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
+  // const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
 
   const { data } = useQuery({
     queryKey: ["userInfo"],
@@ -32,235 +19,156 @@ const StudentsHome = () => {
   });
 
   return (
-    <Box mt={6} padding={2}>
-      <Stack direction={{ md: "row", xs: "column", sm: "column" }} mt={2}>
-        <Stack
-          width={{ md: "25%", xs: "100%", sm: "100%" }}
-          alignItems="center"
-          spacing={2}
+    <Stack
+      direction={{ md: "row", xs: "column", sm: "column" }}
+      mt={10}
+      spacing={2}
+      padding={2}
+    >
+      <Stack width={{ md: "25%", xs: "100%", sm: "100%" }} alignItems="center">
+        <Card
+          sx={{
+            width: "100%",
+            p: 2,
+            borderRadius: 0,
+            minHeight: "80vh"
+          }}
+          elevation={2}
+          
         >
-          {!isDesktop && data?.profileProgress < 100 && (
-            <Alert color="error" severity="error">
-              Please completed required profile information to be considered for
-              any interest(s)
-            </Alert>
-          )}
-          <Stack spacing={1} width="100%">
-            <Typography
-              color="text.primary"
-              sx={{ width: "100%", textAlign: "start" }}
+          <Stack spacing={0.5} alignItems="center" justifyContent="center">
+            <Stack width="100%" direction="row" justifyContent="end">
+              <EditLearnerBasicInformation userInfo={data} />
+            </Stack>
+
+            <Box
+              height={100}
+              width={100}
+              borderRadius="50%"
+              border={1}
+              borderColor="lightgray"
+              component={Stack}
+              justifyContent="center"
+              alignItems="center"
             >
-              Profile Completion
+              <Typography
+                fontWeight="bolder"
+                sx={{ color: "primary.main", fontSize: 30 }}
+              >
+                {data?.firstName?.charAt(0)}
+                {data?.lastName?.charAt(0)}
+              </Typography>
+            </Box>
+            <Typography fontSize={18} fontWeight="bolder" textAlign="center">
+              {data?.firstName &&
+                `${data?.firstName} ${data?.middleName || ""} ${
+                  data?.lastName
+                }`}
+            </Typography>
+            <Typography component={Stack} direction="row">
+              <Typography fontWeight="bolder" fontSize={14}>
+                Email :
+              </Typography>
+              &nbsp;&nbsp;
+              <Typography fontSize={14}>{data?.email}</Typography>
+            </Typography>
+            <Typography component={Stack} direction="row">
+              <Typography fontWeight="bolder" fontSize={14}>
+                Contact :
+              </Typography>{" "}
+              &nbsp;&nbsp;
+              <Typography fontSize={14}>
+                {"+27 "} {data?.studentInformation?.mobileNumber || "None"}
+              </Typography>
+            </Typography>
+            <Typography textAlign="center" component={Stack} direction="row">
+              <Typography fontSize={14} fontWeight="bolder">
+                Occupation :
+              </Typography>{" "}
+              &nbsp;&nbsp;
+              <Typography fontSize={14}>
+                {data?.studentInformation?.careerStatus || "None"}
+              </Typography>
+            </Typography>
+            <Typography component={Stack} direction="row">
+              {data?.studentInformation?.identificationNumber ? (
+                <>
+                  <Typography fontWeight="bolder" fontSize={14}>
+                    ID Number :
+                  </Typography>{" "}
+                  <Typography fontSize={14}>
+                    {data?.studentInformation?.identificationNumber || "None"}
+                  </Typography>
+                </>
+              ) : (
+                <>
+                  <Typography fontWeight="bolder" fontSize={14}>
+                    Passport Number :
+                  </Typography>{" "}
+                  <Typography fontSize={14}>
+                    {data?.studentInformation?.passportNumber || "None"}
+                  </Typography>
+                </>
+              )}
             </Typography>
 
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Box sx={{ width: "100%" }}>
-                <LinearProgress
-                  variant="determinate"
-                  value={data?.profileProgress}
-                  color={
-                    data?.profileProgress < 50
-                      ? "error"
-                      : data?.profileProgress >= 50 &&
-                        data?.profileProgress < 75
-                      ? "warning"
-                      : "success"
-                  }
-                  sx={{ height: 15, borderRadius: 1, mr: 1 }}
-                />
-              </Box>
-              <Box>
-                <Typography variant="body2" color="text.secondary">
-                  {`${Math.round(data?.profileProgress)}%`}
-                </Typography>
-              </Box>
-            </Box>
-          </Stack>
-          <Card
-            sx={{
-              width: "100%",
-              p: 2,
-              // textAlign: "center"
-              height: 700
-            }}
-            elevation={5}
-          >
-            {/* <Typography
-              fontWeight="bolder"
-              fontSize={30}
-              // letterSpacing={5}
-              textAlign="center"
+            <Divider sx={{ width: "100%" }} />
+
+            <Stack
+              spacing={2}
+              paddingTop={2}
+              direction="row"
+              justifyContent="space-between"
             >
-              Student Profile
-            </Typography> */}
-            <Stack spacing={0.5} alignItems="center" justifyContent="center">
-              <Stack width="100%" direction="row" justifyContent="end">
-                <EditLearnerBasicInformation userInfo={data} />
-              </Stack>
-              {/* <img
-                src={userPhoto}
-                alt=""
-                height={100}
-                width={100}
-                style={{
-                  objectFit: "cover",
-                  objectPosition: "top left",
-                  borderRadius: "50%"
-                }}
-              /> */}
-              <Box
-                height={100}
-                width={100}
-                borderRadius="50%"
-                border={1}
-                borderColor="lightgray"
-                component={Stack}
-                justifyContent="center"
-                alignItems="center"
+              <Divider sx={{ backgroundColor: "primary.main" }} />
+              <Typography
+                color="red"
+                fontSize={10}
+                textAlign="center"
+                width="90"
               >
-                <Typography
-                  fontWeight="bolder"
-                  sx={{ color: "primary.main", fontSize: 30 }}
-                >
-                  {data?.firstName?.charAt(0)}
-                  {data?.lastName?.charAt(0)}
-                </Typography>
-              </Box>
-              <Typography fontSize={18} fontWeight="bolder" textAlign="center">
-                {data?.firstName &&
-                  `${data?.firstName} ${data?.middleName || ""} ${
-                    data?.lastName
-                  }`}
+                Please note that your address will determine where you will be
+                placed.
               </Typography>
-              <Typography component={Stack} direction="row">
-                <Typography fontWeight="bolder" fontSize={14}>
-                  Email :
-                </Typography>
-                &nbsp;&nbsp;
-                <Typography fontSize={14}>{data?.email}</Typography>
-              </Typography>
-              <Typography component={Stack} direction="row">
-                <Typography fontWeight="bolder" fontSize={14}>
-                  Contact :
-                </Typography>{" "}
-                &nbsp;&nbsp;
-                <Typography fontSize={14}>
-                  {"+27 "} {data?.studentInformation?.mobileNumber || "None"}
-                </Typography>
-              </Typography>
-              <Typography textAlign="center" component={Stack} direction="row">
-                <Typography fontSize={14} fontWeight="bolder">
-                  Occupation :
-                </Typography>{" "}
-                &nbsp;&nbsp;
-                <Typography fontSize={14}>
-                  {data?.studentInformation?.careerStatus || "None"}
-                </Typography>
-              </Typography>
-              <Typography component={Stack} direction="row">
-                {data?.studentInformation?.identificationNumber ? (
-                  <>
-                    <Typography fontWeight="bolder" fontSize={14}>
-                      ID Number :
-                    </Typography>{" "}
-                    <Typography fontSize={14}>
-                      {data?.studentInformation?.identificationNumber || "None"}
-                    </Typography>
-                  </>
-                ) : (
-                  <>
-                    <Typography fontWeight="bolder" fontSize={14}>
-                      Passport Number :
-                    </Typography>{" "}
-                    <Typography fontSize={14}>
-                      {data?.studentInformation?.passportNumber || "None"}
-                    </Typography>
-                  </>
-                )}
-              </Typography>
-
-              <Divider sx={{ width: "100%" }} />
-
-              <Stack
-                spacing={2}
-                paddingTop={2}
-                direction="row"
-                justifyContent="space-between"
-              >
-                <Divider sx={{ backgroundColor: "primary.main" }} />
-                <Typography
-                  color="red"
-                  fontSize={10}
-                  textAlign="center"
-                  width="90"
-                >
-                  Please note that your address will determine where you will be
-                  placed.
-                </Typography>
-                <EditAddressInforModal studentAddress={data?.studentAddress} />
-              </Stack>
-              <Typography fontSize={18} fontWeight="bolder">
-                {data.studentAddress && "Address Information"}
-              </Typography>
-              <Typography fontSize={14}>
-                {data?.studentAddress?.streetNumber
-                  ? `${data?.studentAddress.streetNumber}, ${data?.studentAddress.streetName}`
-                  : ""}
-              </Typography>
-              <Typography fontSize={14}>
-                {(data?.studentAddress && data?.studentAddress.suburb) || ""}
-              </Typography>
-              <Typography fontSize={14}>
-                {(data?.studentAddress && data?.studentAddress.city) || ""}
-              </Typography>
-              <Typography fontSize={14}>
-                {(data?.studentAddress && data?.studentAddress.province) || ""}
-              </Typography>
-              <Typography fontSize={14}>
-                {(data?.studentAddress && data?.studentAddress.postalCode) ||
-                  ""}
-              </Typography>
-              <Typography fontSize={14} textAlign="center">
-                {(data?.studentAddress && data?.studentAddress.manicipality) ||
-                  ""}
-              </Typography>
+              <EditAddressInforModal studentAddress={data?.studentAddress} />
             </Stack>
-          </Card>
-        </Stack>
-        <Stack
-          width={{ md: "75%", xs: "100%" }}
-          pl={!useMediaQuery(theme.breakpoints.down("md")) && 2}
-          mt={2}
-          spacing={2}
-          alignItems="end"
-          // height={700}
-        >
-          {/* {!useMediaQuery(theme.breakpoints.down("md")) && (
-            <Button
-              variant="contained"
-              color="primary"
-              disabled={false}
-              startIcon={<PublishIcon />}
-            >
-              Submit Profile
-            </Button>
-          )} */}
-
-          <LearnerInformation />
-
-          {/* {useMediaQuery(theme.breakpoints.down("md")) && (
-            <Button
-              variant="contained"
-              color="primary"
-              disabled={false}
-              startIcon={<PublishIcon />}
-            >
-              Submit Profile
-            </Button>
-          )} */}
-        </Stack>
+            <Typography fontSize={18} fontWeight="bolder">
+              {data.studentAddress && "Address Information"}
+            </Typography>
+            <Typography fontSize={14}>
+              {data?.studentAddress?.streetNumber
+                ? `${data?.studentAddress.streetNumber}, ${data?.studentAddress.streetName}`
+                : ""}
+            </Typography>
+            <Typography fontSize={14}>
+              {(data?.studentAddress && data?.studentAddress.suburb) || ""}
+            </Typography>
+            <Typography fontSize={14}>
+              {(data?.studentAddress && data?.studentAddress.city) || ""}
+            </Typography>
+            <Typography fontSize={14}>
+              {(data?.studentAddress && data?.studentAddress.province) || ""}
+            </Typography>
+            <Typography fontSize={14}>
+              {(data?.studentAddress && data?.studentAddress.postalCode) || ""}
+            </Typography>
+            <Typography fontSize={14} textAlign="center">
+              {(data?.studentAddress && data?.studentAddress.manicipality) ||
+                ""}
+            </Typography>
+          </Stack>
+        </Card>
       </Stack>
-    </Box>
+      <Stack
+        width={{ md: "75%", xs: "100%" }}
+        // pl={!useMediaQuery(theme.breakpoints.down("md")) && 2}
+        // mt={2}
+        // alignItems="end"
+        // minHeight={700}
+      >
+        <LearnerInformation />
+      </Stack>
+    </Stack>
   );
 };
 
