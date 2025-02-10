@@ -35,11 +35,10 @@ const TertiaryEducation = () => {
 
   return (
     <Stack
-      height={605}
       padding={2}
       spacing={2}
-      component={Paper}
-      sx={{ overflowY: "auto" }}
+      sx={{ overflowY: "auto"}}
+      border={3}
     >
       <Stack
         // border={1}
@@ -55,7 +54,7 @@ const TertiaryEducation = () => {
         <TertiaryEducationModal userId={data?.id} />
       </Stack>
       {data?.tertiaryEducation?.length > 0 ? (
-        <TableContainer component={Paper}>
+        <TableContainer>
           <Table aria-label="simple table">
             <TableHead>
               <TableRow>
