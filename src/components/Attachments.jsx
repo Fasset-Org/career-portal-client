@@ -122,7 +122,12 @@ const Attachments = () => {
                       >
                         <Tooltip title="View">
                           <IconButton
-                            onClick={() => {}}
+                            onClick={() => {
+                              window.open(
+                                `${process.env.REACT_APP_API_URL}/student/downloadDocument?filename=${document.blobFileName}`,
+                                "_blank"
+                              );
+                            }}
                             sx={{
                               backgroundColor: "primary.main",
                               color: "#FFFFFF",
@@ -137,7 +142,7 @@ const Attachments = () => {
                           </IconButton>
                         </Tooltip>
 
-                        <DeleteAttachmentModal id="" />
+                        <DeleteAttachmentModal id={document.id} />
                       </Stack>
                     </TableCell>
                   </TableRow>
