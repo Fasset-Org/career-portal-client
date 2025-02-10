@@ -3,14 +3,16 @@ import {
   IconButton,
   LinearProgress,
   Link,
-  Paper,
   Stack,
   Table,
   TableBody,
   TableCell,
   TableContainer,
+  TableFooter,
   TableHead,
+  TablePagination,
   TableRow,
+  Tooltip,
   Typography
 } from "@mui/material";
 import React from "react";
@@ -18,8 +20,22 @@ import AddEditAttachmentModal from "./modals/AddEditAttachmentModal";
 import { useQuery } from "@tanstack/react-query";
 import ApiQueries from "../apiQuries";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import TablePaginationActions from "@mui/material/TablePagination/TablePaginationActions";
+import { DeleteAttachmentModal } from "./modals/DeleteAttachmentModal";
 
 const Attachments = () => {
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
   const { data, isLoading } = useQuery({
     queryKey: ["userInfo"],
     queryFn: () => {
@@ -33,11 +49,9 @@ const Attachments = () => {
 
   return (
     <Stack
-      height={605}
       padding={2}
       spacing={2}
-      component={Paper}
-      sx={{ overflowY: "auto" }}
+      sx={{ overflowY: "auto", borderRadius: 0, height: "70.2vh" }}
     >
       <Stack
         // border={1}
@@ -53,7 +67,7 @@ const Attachments = () => {
         <AddEditAttachmentModal userId={data?.id} />
       </Stack>
       {data?.attachments?.length > 0 ? (
-        <TableContainer component={Paper}>
+        <TableContainer>
           <Table aria-label="simple table">
             <TableHead>
               <TableRow>
@@ -106,15 +120,55 @@ const Attachments = () => {
                         spacing={2}
                         justifyContent="center"
                       >
-                        <IconButton>
-                          <VisibilityIcon />
-                        </IconButton>
+                        <Tooltip title="View">
+                          <IconButton
+                            onClick={() => {
+                              window.open(
+                                `${process.env.REACT_APP_API_URL}/student/downloadDocument?filename=${document.blobFileName}`,
+                                "_blank"
+                              );
+                            }}
+                            sx={{
+                              backgroundColor: "primary.main",
+                              color: "#FFFFFF",
+                              "&:hover": {
+                                backgroundColor: "primary.light",
+                                color: "#FFFFFF",
+                                fontWeight: "bolder"
+                              }
+                            }}
+                          >
+                            <VisibilityIcon />
+                          </IconButton>
+                        </Tooltip>
+
+                        <DeleteAttachmentModal id={document.id} />
                       </Stack>
                     </TableCell>
                   </TableRow>
                 );
               })}
             </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TablePagination
+                  rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
+                  // colSpan={3}
+                  count={data?.attachments?.length || 0}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  SelectProps={{
+                    inputProps: {
+                      "aria-label": "rows per page"
+                    },
+                    native: true
+                  }}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                  ActionsComponent={TablePaginationActions}
+                />
+              </TableRow>
+            </TableFooter>
           </Table>
         </TableContainer>
       ) : (

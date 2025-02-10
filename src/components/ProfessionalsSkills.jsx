@@ -1,13 +1,14 @@
 import {
   Alert,
   LinearProgress,
-  Paper,
   Stack,
   Table,
   TableBody,
   TableCell,
   TableContainer,
+  TableFooter,
   TableHead,
+  TablePagination,
   TableRow,
   Typography
 } from "@mui/material";
@@ -16,8 +17,23 @@ import ProfessionalsSkillsModal from "./modals/ProfessionalSkillsModal";
 import { useQuery } from "@tanstack/react-query";
 import ApiQueries from "../apiQuries";
 import { DeleteSkillModal } from "./modals/DeleteSkillModal";
+import TablePaginationActions from "@mui/material/TablePagination/TablePaginationActions";
 
 const ProfessionalsSkills = () => {
+
+  const [page, setPage] = React.useState(0);
+      const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    
+      const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+      };
+    
+      const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0);
+      };
+  
+
   const { data, isLoading } = useQuery({
     queryKey: ["userInfo"],
     queryFn: () => {
@@ -33,10 +49,8 @@ const ProfessionalsSkills = () => {
 
   return (
     <Stack
-      height={605}
       padding={2}
       spacing={2}
-      component={Paper}
       sx={{ overflowY: "auto" }}
     >
       <Stack
@@ -54,7 +68,7 @@ const ProfessionalsSkills = () => {
       </Stack>
 
       {data?.skills?.length > 0 ? (
-        <TableContainer component={Paper}>
+        <TableContainer>
           <Table aria-label="simple table">
             <TableHead>
               <TableRow>
@@ -113,12 +127,12 @@ const ProfessionalsSkills = () => {
                 );
               })}
             </TableBody>
-            {/* <TableFooter>
+            <TableFooter>
             <TableRow>
               <TablePagination
                 rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
                 // colSpan={3}
-                count={employees?.length || 0}
+                count={data?.skills?.length || 0}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 SelectProps={{
@@ -132,7 +146,7 @@ const ProfessionalsSkills = () => {
                 ActionsComponent={TablePaginationActions}
               />
             </TableRow>
-          </TableFooter> */}
+          </TableFooter>
           </Table>
         </TableContainer>
       ) : (

@@ -1,14 +1,15 @@
 import {
   Alert,
   LinearProgress,
-  Paper,
   Snackbar,
   Stack,
   Table,
   TableBody,
   TableCell,
   TableContainer,
+  TableFooter,
   TableHead,
+  TablePagination,
   TableRow,
   Typography
 } from "@mui/material";
@@ -16,19 +17,20 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import ApiQueries from "../apiQuries";
 import AddEducationModal from "./modals/AddEducationModal";
+import TablePaginationActions from "@mui/material/TablePagination/TablePaginationActions";
 
 const BasicEducation = () => {
-  // const [page, setPage] = React.useState(0);
-  // const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-  // const handleChangePage = (event, newPage) => {
-  //   setPage(newPage);
-  // };
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
 
-  // const handleChangeRowsPerPage = (event) => {
-  //   setRowsPerPage(parseInt(event.target.value, 10));
-  //   setPage(0);
-  // };
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["userInfo"],
@@ -52,13 +54,7 @@ const BasicEducation = () => {
   }
 
   return (
-    <Stack
-      height={605}
-      padding={2}
-      spacing={2}
-      component={Paper}
-      sx={{ overflowY: "auto" }}
-    >
+    <Stack padding={2} spacing={2} sx={{ overflowY: "auto" }}>
       <Stack direction="row" justifyContent="space-between">
         <Typography
           sx={{ fontSize: 20, textAlign: "center", fontWeight: "bolder" }}
@@ -69,7 +65,7 @@ const BasicEducation = () => {
       </Stack>
 
       {data?.basicEducation ? (
-        <TableContainer component={Paper}>
+        <TableContainer>
           <Table aria-label="simple table">
             <TableHead>
               <TableRow>
@@ -127,12 +123,12 @@ const BasicEducation = () => {
                 </TableCell>
               </TableRow>
             </TableBody>
-            {/* <TableFooter>
+            <TableFooter>
             <TableRow>
               <TablePagination
                 rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
                 // colSpan={3}
-                count={employees?.length || 0}
+                count={data?.basicEducation?.length || 0}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 SelectProps={{
@@ -146,7 +142,7 @@ const BasicEducation = () => {
                 ActionsComponent={TablePaginationActions}
               />
             </TableRow>
-          </TableFooter> */}
+          </TableFooter>
           </Table>
         </TableContainer>
       ) : (

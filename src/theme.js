@@ -5,8 +5,8 @@ export const themeDark = createTheme({
     MuiPaper: {
       styleOverrides: {
         root: {
-          border: "1px solid #202020ff"
-          // borderRadius: "10px",
+          border: "1px solid #202020ff",
+          borderRadius: 0
         }
       }
     },
@@ -27,9 +27,17 @@ export const themeDark = createTheme({
     },
     MuiButton: {
       styleOverrides: {
-        // root: {
-        //   height: 37
-        // }
+        root: {
+          height: 50,
+          borderRadius: 0
+        }
+      }
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          borderRadius: 0
+        }
       }
     },
     MuiTableHead: {
@@ -38,15 +46,7 @@ export const themeDark = createTheme({
           backgroundColor: "#1ccaff"
         }
       }
-    },
-
-    // MuiButton: {
-    //   styleOverrides: {
-    //     root: {
-    //       borderRadius: 8
-    //     }
-    //   }
-    // }
+    }
   },
   palette: {
     mode: "dark",
@@ -78,7 +78,9 @@ export const themeLight = createTheme({
   components: {
     MuiPaper: {
       styleOverrides: {
-        root: {}
+        root: {
+          borderRadius: 0
+        }
       }
     },
     MuiCard: {
@@ -91,7 +93,8 @@ export const themeLight = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          height: 50
+          height: 50,
+          borderRadius: 0
         }
       }
     },
@@ -99,6 +102,13 @@ export const themeLight = createTheme({
       styleOverrides: {
         root: {
           color: "#FFFFFF"
+        }
+      }
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          borderRadius: 0
         }
       }
     },
@@ -123,7 +133,7 @@ export const themeLight = createTheme({
       contrastText: "#ffffff"
     },
     background: {
-      paper: "#fbfbfbff",
+      paper: "#fbfbfbff"
       // default: "#f3f3f3ff"
     }
   },

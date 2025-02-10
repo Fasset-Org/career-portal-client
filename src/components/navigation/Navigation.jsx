@@ -34,6 +34,7 @@ import PersonAddDisabledIcon from "@mui/icons-material/PersonAddDisabled";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import SettingsSuggestIcon from "@mui/icons-material/SettingsSuggest";
 import logo from "../../images/horizontail-white-logo.jpg";
+import logo2 from "../../images/logo_2.png";
 import { useNavigate } from "react-router-dom";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
@@ -41,7 +42,7 @@ import { useTheme } from "@mui/material/styles";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CastForEducationIcon from "@mui/icons-material/CastForEducation";
 import Close from "@mui/icons-material/Close";
-import { DeleteAccountModal } from "../DeleteAccountModal";
+// import { DeleteAccountModal } from "../DeleteAccountModal";
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open"
 })(({ theme, open }) => ({
@@ -221,7 +222,11 @@ export default function Navigation({ children, setThemeMode, currentTheme }) {
             </>
           )}
 
-          <img src={logo} width={160} height={65} alt="" />
+          {currentTheme ? (
+            <img src={logo} width={160} height={75} alt="" style={{border: '3px sloid red'}} />
+          ) : (
+            <img src={logo2} width={160} height={40} alt="" />
+          )}
           <Box sx={{ mx: "auto" }}></Box>
           <Stack direction="row" spacing={2}>
             <Stack
@@ -305,9 +310,9 @@ export default function Navigation({ children, setThemeMode, currentTheme }) {
                         <SignOutButton />
                       </MenuItem>
 
-                      <MenuItem>
+                      {/* <MenuItem>
                         <DeleteAccountModal id={data.id} />
-                      </MenuItem>
+                      </MenuItem> */}
                     </Menu>
                   </Box>
                 </>

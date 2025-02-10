@@ -290,8 +290,8 @@ export default function EditLearnerBasicInformation({ userInfo }) {
                       />
                     </Grid>
 
-                    <Grid item xs={12} md={12}>
-                      <InputLabel>RSA ID Number</InputLabel>
+                    <Grid item xs={12} md={6}>
+                      <InputLabel sx={{ mb: 1 }}>RSA ID Number</InputLabel>
                       <SelectFieldWrapper
                         name="rsaId"
                         label="Do you have RSA ID number?"
@@ -301,7 +301,7 @@ export default function EditLearnerBasicInformation({ userInfo }) {
 
                     {values.rsaId === "Yes" ? (
                       <Grid item xs={12} md={12}>
-                        <InputLabel>Identification Number</InputLabel>
+                        <InputLabel sx={{ mb: 1 }}>Identification Number</InputLabel>
                         <TextFieldWrapper
                           name="identificationNumber"
                           label="Identification Number"
@@ -309,7 +309,7 @@ export default function EditLearnerBasicInformation({ userInfo }) {
                       </Grid>
                     ) : values.rsaId === "No" ? (
                       <Grid item xs={12} md={12}>
-                        <InputLabel>Passport Number</InputLabel>
+                        <InputLabel sx={{ mb: 1 }}>Passport Number</InputLabel>
                         <TextFieldWrapper
                           name="passportNumber"
                           label="Passport Number"
@@ -351,12 +351,11 @@ export default function EditLearnerBasicInformation({ userInfo }) {
                         options={raceOptions}
                       />
                     </Grid>
-                    <Grid item xs={12} md={16}>
-                      <InputLabel>Mobile Number</InputLabel>
+                    <Grid item xs={12} md={6}>
+                      <InputLabel sx={{ mb: 1 }}>Mobile Number</InputLabel>
                       <TextFieldWrapper
                         name="mobileNumber"
                         label="Mobile Number"
-                        sx={{ mt: 1 }}
                         type="number"
                       />
                     </Grid>
