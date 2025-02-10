@@ -54,7 +54,7 @@ const ProfessionalsSkills = () => {
       </Stack>
 
       {data?.skills?.length > 0 ? (
-        <TableContainer component={Paper}>
+        <TableContainer>
           <Table aria-label="simple table">
             <TableHead>
               <TableRow>
