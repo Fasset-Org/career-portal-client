@@ -176,11 +176,11 @@ const CertificateAndTrainingModal = ({ userId, certificate }) => {
               return (
                 <Form>
                   <Grid container spacing={2}>
-                    <Grid item xs={12} md={6}>
+                    <Grid item xs={12} md={12}>
                       <InputLabel sx={{ mb: 1 }}>Course</InputLabel>
                       <TextFieldWrapper name="course" label="Course" />
                     </Grid>
-                    <Grid item xs={12} md={6}>
+                    <Grid item xs={12} md={12}>
                       <InputLabel sx={{ mb: 1 }}>Year</InputLabel>
                       <YearDatePicker name="year" label="Year" />
                     </Grid>
