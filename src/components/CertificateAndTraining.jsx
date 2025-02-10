@@ -2,7 +2,6 @@ import {
   Alert,
   IconButton,
   LinearProgress,
-  Paper,
   Snackbar,
   Stack,
   Table,
@@ -60,10 +59,8 @@ const CertificateAndTraining = () => {
 
   return (
     <Stack
-      height={605}
       padding={2}
       spacing={2}
-      component={Paper}
       sx={{ overflowY: "auto" }}
     >
       <Stack
