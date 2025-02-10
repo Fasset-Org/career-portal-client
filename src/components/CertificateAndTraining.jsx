@@ -80,7 +80,7 @@ const CertificateAndTraining = () => {
         <CertificateAndTrainingModal userId={data?.id} />
       </Stack>
       {data?.certificates?.length > 0 ? (
-        <TableContainer component={Paper}>
+        <TableContainer>
           <Table aria-label="simple table">
             <TableHead>
               <TableRow>
