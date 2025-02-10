@@ -5,8 +5,8 @@ export const themeDark = createTheme({
     MuiPaper: {
       styleOverrides: {
         root: {
-          border: "1px solid #202020ff"
-          // borderRadius: "10px",
+          border: "1px solid #202020ff",
+          borderRadius: 0
         }
       }
     },
@@ -78,7 +78,9 @@ export const themeLight = createTheme({
   components: {
     MuiPaper: {
       styleOverrides: {
-        root: {}
+        root: {
+          borderRadius: 0
+        }
       }
     },
     MuiCard: {
