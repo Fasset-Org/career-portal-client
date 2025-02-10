@@ -52,13 +52,7 @@ const BasicEducation = () => {
   }
 
   return (
-    <Stack
-      height={605}
-      padding={2}
-      spacing={2}
-      component={Paper}
-      sx={{ overflowY: "auto" }}
-    >
+    <Stack padding={2} spacing={2} sx={{ overflowY: "auto" }}>
       <Stack direction="row" justifyContent="space-between">
         <Typography
           sx={{ fontSize: 20, textAlign: "center", fontWeight: "bolder" }}
@@ -69,7 +63,7 @@ const BasicEducation = () => {
       </Stack>
 
       {data?.basicEducation ? (
-        <TableContainer component={Paper}>
+        <TableContainer>
           <Table aria-label="simple table">
             <TableHead>
               <TableRow>
