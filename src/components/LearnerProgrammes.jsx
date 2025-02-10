@@ -85,7 +85,7 @@ const LearnerProgrammes = () => {
       padding={2}
       spacing={2}
       component={Paper}
-      sx={{ overflowY: "auto" }}
+      sx={{ overflowY: "auto", borderRadius: 0 }}
     >
       <Typography sx={{ fontSize: 20, fontWeight: "bolder" }}>
         Learner Interventions
