@@ -8,7 +8,7 @@ import CardMembershipIcon from "@mui/icons-material/CardMembership";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import SubjectIcon from "@mui/icons-material/Subject";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
-import { Alert, Paper, Stack, Typography, useMediaQuery } from "@mui/material";
+import { Paper, Stack, Typography } from "@mui/material";
 import PropTypes from "prop-types";
 import BasicEducation from "./BasicEducation";
 import TertiaryEducation from "./TertiaryEducation";
@@ -18,7 +18,6 @@ import Attachments from "./Attachments";
 import LearnerProgrammes from "./LearnerProgrammes";
 import { useQuery } from "@tanstack/react-query";
 import ApiQueries from "../apiQuries";
-import { useTheme } from "@mui/material/styles";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -26,9 +25,9 @@ function TabPanel(props) {
   return (
     <div role="tabpanel" hidden={value !== index} {...other}>
       {value === index && (
-        <Box>
+        <Stack component={Paper} minHeight={"70.2vh"} sx={{ borderRadius: 0 }}>
           <Typography>{children}</Typography>
-        </Box>
+        </Stack>
       )}
     </div>
   );
@@ -49,8 +48,6 @@ function a11yProps(index) {
 
 export default function AboutUserInfo() {
   const [value, setValue] = React.useState(0);
-  const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -65,16 +62,10 @@ export default function AboutUserInfo() {
     // staleTime: 1000 * 60 * 60 * 24
   });
 
-  console.log(data);
+  // console.log(data);
 
   return (
-    <Stack spacing={2} width="100%" mt={!data?.profileProgress ? -1.5 : 6}>
-      {isDesktop && data?.profileProgress < 100 && (
-        <Alert color="error" severity="error">
-          Please completed required profile information to be considered for any
-          interest(s)
-        </Alert>
-      )}
+    <Stack spacing={2} width="100%">
       <Tabs
         value={value}
         onChange={handleChange}
@@ -86,9 +77,10 @@ export default function AboutUserInfo() {
           [`& .${tabsClasses.scrollButtons}`]: {
             "&.Mui-disabled": { opacity: 0.3 }
           },
-          bgcolor: "background.paper"
+          bgcolor: "background.paper",
           // border: 1,
           // borderColor: "secondary.main"
+          borderRadius: 0
         }}
         TabIndicatorProps={{
           sx: {
