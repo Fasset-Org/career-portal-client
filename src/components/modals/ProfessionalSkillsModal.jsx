@@ -27,6 +27,7 @@ import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 
 const ProfessionalsSkillsModal = ({ skill, userId }) => {
+  
   const [open, setOpen] = useState(false);
   const [openBackDrop, setOpenBackDrop] = React.useState(false);
   const theme = useTheme();
