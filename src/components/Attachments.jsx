@@ -53,7 +53,7 @@ const Attachments = () => {
         <AddEditAttachmentModal userId={data?.id} />
       </Stack>
       {data?.attachments?.length > 0 ? (
-        <TableContainer component={Paper}>
+        <TableContainer>
           <Table aria-label="simple table">
             <TableHead>
               <TableRow>
