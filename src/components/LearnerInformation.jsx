@@ -1,7 +1,6 @@
 import * as React from "react";
 import Tabs, { tabsClasses } from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import Box from "@mui/material/Box";
 import SchoolIcon from "@mui/icons-material/School";
 import SettingsSuggestIcon from "@mui/icons-material/SettingsSuggest";
 import CardMembershipIcon from "@mui/icons-material/CardMembership";
@@ -16,8 +15,6 @@ import ProfessionalsSkills from "./ProfessionalsSkills";
 import CertificateAndTraining from "./CertificateAndTraining";
 import Attachments from "./Attachments";
 import LearnerProgrammes from "./LearnerProgrammes";
-import { useQuery } from "@tanstack/react-query";
-import ApiQueries from "../apiQuries";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -56,17 +53,6 @@ export default function AboutUserInfo() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
-  const { data } = useQuery({
-    queryKey: ["userInfo"],
-    queryFn: () => {
-      return ApiQueries.userInfo();
-    }
-
-    // staleTime: 1000 * 60 * 60 * 24
-  });
-
-  // console.log(data);
 
   return (
     <Stack spacing={2} width="100%">
