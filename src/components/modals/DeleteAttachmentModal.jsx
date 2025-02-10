@@ -68,12 +68,12 @@ export const DeleteAttachmentModal = ({ id }) => {
           <DeleteForever />
         </IconButton>
       </Tooltip>
-      {isSuccess && <AlertPopup open={true} message={data.message} />}
+      {isSuccess && <AlertPopup open={true} message={data?.message} />}
       {isError && (
         <AlertPopup
           severity="error"
           open={true}
-          message={error.response.data.message || "Server Error"}
+          message={error?.response?.data?.message || "Server Error"}
         />
       )}
       <Dialog
