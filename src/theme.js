@@ -76,6 +76,14 @@ export const themeDark = createTheme({
 
 export const themeLight = createTheme({
   components: {
+    MuiDivider: {
+      styleOverrides: {
+        root: {
+          borderWidth: 1,
+          opacity: 0.8
+        }
+      }
+    },
     MuiPaper: {
       styleOverrides: {
         root: {
