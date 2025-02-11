@@ -29,7 +29,8 @@ export const themeDark = createTheme({
       styleOverrides: {
         root: {
           height: 50,
-          borderRadius: 0
+          borderRadius: 0,
+          fontWeight: "bolder"
         }
       }
     },
@@ -102,7 +103,8 @@ export const themeLight = createTheme({
       styleOverrides: {
         root: {
           height: 50,
-          borderRadius: 0
+          borderRadius: 0,
+          fontWeight: "bolder"
         }
       }
     },

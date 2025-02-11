@@ -20,9 +20,8 @@ import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import ApiQueries from "../../apiQuries";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
-// import LoginIcon from "@mui/icons-material/Login";
-// import bgImg from "../../images/Untitled-2.bcecf2a1201a8f598c47.png";
 import blueLogo from "../../images/blueLogo-transparentBg.png";
+import whiteLogo from "../../images/whiteLogo-bgwhite.png";
 import SelectFieldWrapper from "../../components/form-components/SelectFieldWrapper";
 import FASSET_POLICY from "../../images/FASSET POPIA POLICY.pdf";
 
@@ -78,7 +77,6 @@ const RegisterUser = () => {
       direction="row"
       justifyContent="center"
       alignItems="center"
-      sx={{ backgroundColor: "#FFFFFF" }}
       mt={10}
       minHeight="90vh"
     >
@@ -102,7 +100,12 @@ const RegisterUser = () => {
         )}
 
         <Stack height={150} alignItems="center" padding={2}>
-          <img src={blueLogo} alt="" height={150} width={150} />
+          <img
+            src={theme.palette.mode === "dark" ? whiteLogo : blueLogo}
+            alt=""
+            height={150}
+            width={150}
+          />
         </Stack>
 
         <Typography
@@ -290,7 +293,15 @@ const RegisterUser = () => {
                         />
                       </Grid>
 
-                      <Grid item xs={12} md={6}>
+                      <Grid
+                        item
+                        xs={12}
+                        md={
+                          values.rsaId === "Yes" || values.rsaId === "No"
+                            ? 12
+                            : 6
+                        }
+                      >
                         {/* <InputLabel>Confirm Password</InputLabel> */}
 
                         <TextFieldWrapper

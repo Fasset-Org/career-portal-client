@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import blueLogo from "../../images/blueLogo-transparentBg.png";
+import whiteLogo from "../../images/whiteLogo-bgwhite.png";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
 import TextFieldWrapper from "../../components/form-components/TextFieldWrapper";
@@ -40,16 +41,9 @@ const ForgotPassword = ({ currentTheme }) => {
     >
       <Stack
         width={{ md: "30%", xs: "100%" }}
-        // spacing={2}
-        alignItems="center"
-        // minHeight="86vh"
         justifyContent="center"
         paddingX={{ md: 5, xs: 4 }}
         py={{ md: 4, xs: 2 }}
-        // border={{ md: 1 }}
-        // borderColor={{ md: "lightgray" }}
-        // component={{ md: Paper, Stack}}
-        sx={{ backgroundColor: "#FFFFFF" }}
         component={isMdUp ? Paper : "div"}
       >
         {isError && (
@@ -64,18 +58,28 @@ const ForgotPassword = ({ currentTheme }) => {
         )}
 
         <Stack height={150} alignItems="center" padding={2} mb={2}>
-          <img src={blueLogo} alt="" height={150} width={150} />
+          <img
+            src={theme.palette.mode === "dark" ? whiteLogo : blueLogo}
+            alt=""
+            height={150}
+            width={150}
+          />
         </Stack>
 
         <Typography
           fontSize={20}
           fontWeight="bolder"
-          sx={{ color: "primary.main" }}
+          sx={{ color: "primary.main", textAlign: "center" }}
         >
           Hi, Forgot Password Your Password?
         </Typography>
         <Typography
-          sx={{ color: "#85929e", letterSpacing: 0.5, fontWeight: "bolder" }}
+          sx={{
+            color: "#85929e",
+            letterSpacing: 0.5,
+            fontWeight: "bolder",
+            textAlign: "center"
+          }}
         >
           Enter your email to reset your password
         </Typography>
