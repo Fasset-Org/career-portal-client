@@ -3,10 +3,14 @@ import {
   Backdrop,
   Button,
   CircularProgress,
+  Divider,
   Grid,
+  Paper,
   // LinearProgress,
   Stack,
-  Typography
+  Typography,
+  useMediaQuery,
+  useTheme
 } from "@mui/material";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
@@ -16,7 +20,7 @@ import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import ApiQueries from "../../apiQuries";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
-import LoginIcon from "@mui/icons-material/Login";
+// import LoginIcon from "@mui/icons-material/Login";
 // import bgImg from "../../images/Untitled-2.bcecf2a1201a8f598c47.png";
 import blueLogo from "../../images/blueLogo-transparentBg.png";
 import SelectFieldWrapper from "../../components/form-components/SelectFieldWrapper";
@@ -25,6 +29,9 @@ import FASSET_POLICY from "../../images/FASSET POPIA POLICY.pdf";
 const RegisterUser = () => {
   const navigate = useNavigate();
   const [openBackDrop, setOpenBackDrop] = useState(false);
+
+  const theme = useTheme();
+  const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
 
   const { mutate, isLoading, error, isSuccess, data } = useMutation({
     mutationFn: (formData) => {
@@ -72,17 +79,18 @@ const RegisterUser = () => {
       justifyContent="center"
       alignItems="center"
       sx={{ backgroundColor: "#FFFFFF" }}
-      mt={8.5}
+      mt={10}
       minHeight="90vh"
     >
       <Stack
-        width={{ md: "50%", xs: "100%" }}
+        width={{ md: "30%", xs: "100%" }}
         alignItems="center"
         justifyContent="center"
         padding={2}
-        border={{ md: 1 }}
-        borderColor={{ md: "lightgray" }}
-        py={{ md: 10, xs: 2 }}
+        // border={{ md: 1 }}
+        // borderColor={{ md: "lightgray" }}
+        py={{ md: 4, xs: 2 }}
+        component={isMdUp ? Paper : "div"}
       >
         {error?.response?.status === 409 && (
           <Alert severity="error" color="error" sx={{ m: 2, width: "100%" }}>
@@ -97,10 +105,16 @@ const RegisterUser = () => {
           <img src={blueLogo} alt="" height={150} width={150} />
         </Stack>
 
-        <Typography fontSize={20} fontWeight="bolder">
-          Welcome
+        <Typography
+          fontSize={20}
+          fontWeight="bolder"
+          sx={{ color: "primary.main" }}
+        >
+          Hi, Welcome
         </Typography>
-        <Typography fontWeight="bolder" sx={{ color: "primary.main" }}>
+        <Typography
+          sx={{ color: "#85929e", letterSpacing: 0.5, fontWeight: "bolder" }}
+        >
           Register in to continue to Learner Portal
         </Typography>
 
@@ -289,9 +303,9 @@ const RegisterUser = () => {
 
                       <Grid item xs={12} md={12}>
                         <Typography>
-                          By registering in and completing your profile, you agree
-                          that you have read,understood and accepted that you
-                          will be bounded by the terms of use of the{" "}
+                          By registering in and completing your profile, you
+                          agree that you have read,understood and accepted that
+                          you will be bounded by the terms of use of the{" "}
                           <a
                             href={FASSET_POLICY}
                             style={{
@@ -322,7 +336,27 @@ const RegisterUser = () => {
                         </Button>
                       </Grid>
 
-                      <Grid item xs={12} md={6}>
+                      <Grid item xs={12} md={12}>
+                        <Divider />
+                      </Grid>
+                      <Grid item xs={12} md={12}>
+                        <Typography
+                          sx={{
+                            textAlign: "center",
+                            fontSize: 15,
+                            fontWeight: "bold",
+                            cursor: "pointer",
+                            color: "primary.main"
+                          }}
+                          onClick={() => {
+                            navigate("/login");
+                          }}
+                        >
+                          Already have an account?
+                        </Typography>
+                      </Grid>
+
+                      {/* <Grid item xs={12} md={6}>
                         <Button
                           variant="outlined"
                           // color="warning"
@@ -348,7 +382,7 @@ const RegisterUser = () => {
                         >
                           View Career Guide
                         </Button>
-                      </Grid>
+                      </Grid> */}
                       <Backdrop
                         sx={{
                           color: "#fff",
