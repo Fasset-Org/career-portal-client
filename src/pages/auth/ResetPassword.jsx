@@ -79,20 +79,14 @@ const ResetPassword = ({ currentTheme }) => {
         alignItems="center"
         mt={10}
         minHeight="90vh"
-        // border={1}
       >
         <Stack
-          width={{ md: "50%", xs: "100%" }}
+          width={{ md: "30%", xs: "100%" }}
           // spacing={2}
           alignItems="center"
-          // minHeight="86vh"
           justifyContent="center"
           paddingX={{ md: 5, xs: 4 }}
           py={{ md: 4, xs: 2 }}
-          // border={{ md: 1 }}
-          // borderColor={{ md: "lightgray" }}
-          // component={{ md: Paper, Stack}}
-          sx={{ backgroundColor: "#FFFFFF" }}
           component={isMdUp ? Paper : "div"}
         >
           {resetPasswordMutation?.error?.response?.status === 404 && (
