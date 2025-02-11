@@ -15,7 +15,6 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import {
   Avatar,
-  Button,
   Menu,
   MenuItem,
   Stack,
@@ -23,8 +22,6 @@ import {
   styled,
   useMediaQuery
 } from "@mui/material";
-import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
-import LoginIcon from "@mui/icons-material/Login";
 import { SignOutButton } from "../SignOutButton";
 import { useQuery } from "@tanstack/react-query";
 import ApiQueries from "../../apiQuries";
@@ -39,7 +36,6 @@ import { useNavigate } from "react-router-dom";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import { useTheme } from "@mui/material/styles";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CastForEducationIcon from "@mui/icons-material/CastForEducation";
 import Close from "@mui/icons-material/Close";
 // import { DeleteAccountModal } from "../DeleteAccountModal";
@@ -135,14 +131,6 @@ export default function Navigation({ children, setThemeMode, currentTheme }) {
   const navigate = useNavigate();
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const openMenu = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -223,7 +211,13 @@ export default function Navigation({ children, setThemeMode, currentTheme }) {
           )}
 
           {currentTheme ? (
-            <img src={logo} width={160} height={75} alt="" style={{border: '3px sloid red'}} />
+            <img
+              src={logo}
+              width={160}
+              height={75}
+              alt=""
+              style={{ border: "3px sloid red" }}
+            />
           ) : (
             <img src={logo2} width={160} height={40} alt="" />
           )}
@@ -316,90 +310,20 @@ export default function Navigation({ children, setThemeMode, currentTheme }) {
                     </Menu>
                   </Box>
                 </>
-              ) : isDesktop ? (
-                <>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    endIcon={<LoginIcon />}
-                    sx={{ fontWeight: "bolder" }}
-                    onClick={() => navigate("/login")}
-                  >
-                    Login
-                  </Button>
-
-                  <Button
-                    variant="outlined"
-                    // color="warning"
-                    endIcon={<AppRegistrationIcon />}
-                    sx={{ fontWeight: "bolder" }}
-                    onClick={() => navigate("/register")}
-                  >
-                    Register
-                  </Button>
-                </>
+              ) : currentTheme ? (
+                <IconButton
+                  onClick={() => setThemeMode(!currentTheme)}
+                  size="large"
+                >
+                  <DarkModeIcon fontSize="large" />
+                </IconButton>
               ) : (
-                <>
-                  <IconButton onClick={handleClick} size="large">
-                    <MoreVertIcon fontSize="large" />
-                  </IconButton>
-
-                  <Menu
-                    anchorEl={anchorEl}
-                    id="account-menu"
-                    open={openMenu}
-                    onClose={handleClose}
-                    onClick={handleClose}
-                    PaperProps={{
-                      elevation: 0,
-                      sx: {
-                        overflow: "visible",
-                        filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                        mt: 1.5,
-                        "& .MuiAvatar-root": {
-                          width: 32,
-                          height: 32,
-                          ml: -0.5,
-                          mr: 1
-                        },
-                        "&::before": {
-                          content: '""',
-                          display: "block",
-                          position: "absolute",
-                          top: 0,
-                          right: 14,
-                          width: 10,
-                          height: 10,
-                          bgcolor: "background.paper",
-                          transform: "translateY(-50%) rotate(45deg)",
-                          zIndex: 0
-                        }
-                      }
-                    }}
-                    transformOrigin={{ horizontal: "right", vertical: "top" }}
-                    anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-                  >
-                    <MenuItem onClick={handleClose}>
-                      <Button
-                        endIcon={<LoginIcon />}
-                        sx={{ fontWeight: "bolder" }}
-                        onClick={() => navigate("/login")}
-                      >
-                        Login
-                      </Button>
-                    </MenuItem>
-
-                    <MenuItem onClick={handleClose}>
-                      <Button
-                        endIcon={<AppRegistrationIcon />}
-                        sx={{ fontWeight: "bolder" }}
-                        onClick={() => navigate("/register")}
-                      >
-                        Register
-                      </Button>
-                    </MenuItem>
-                  </Menu>
-                </>
+                <IconButton
+                  onClick={() => setThemeMode(!currentTheme)}
+                  size="large"
+                >
+                  <LightModeIcon fontSize="large" />
+                </IconButton>
               )}
             </Stack>
           </Stack>
