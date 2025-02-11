@@ -8,9 +8,12 @@ import {
   Grid,
   InputLabel,
   LinearProgress,
+  Paper,
   // LinearProgress,
   Stack,
-  Typography
+  Typography,
+  useMediaQuery,
+  useTheme
 } from "@mui/material";
 // import { useMutation } from "@tanstack/react-query";
 // import { useEffect } from "react";
@@ -27,6 +30,9 @@ import ApiQueries from "../../apiQuries";
 const ResetPassword = ({ currentTheme }) => {
   let { resetToken } = useParams();
   const navigate = useNavigate();
+
+  const theme = useTheme();
+  const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
 
   const { isLoading, isError, error, data } = useQuery({
     queryKey: ["verify"],
@@ -70,7 +76,7 @@ const ResetPassword = ({ currentTheme }) => {
         direction="row"
         justifyContent="center"
         alignItems="center"
-        mt={8.5}
+        mt={10}
         minHeight="90vh"
         // border={1}
       >
@@ -81,11 +87,12 @@ const ResetPassword = ({ currentTheme }) => {
           // minHeight="86vh"
           justifyContent="center"
           paddingX={{ md: 5, xs: 4 }}
-          py={{ md: 10, xs: 2 }}
-          border={{ md: 1 }}
-          borderColor={{ md: "lightgray" }}
+          py={{ md: 4, xs: 2 }}
+          // border={{ md: 1 }}
+          // borderColor={{ md: "lightgray" }}
           // component={{ md: Paper, Stack}}
           sx={{ backgroundColor: "#FFFFFF" }}
+          component={isMdUp ? Paper : "div"}
         >
           {resetPasswordMutation?.error?.response?.status === 404 && (
             <Alert severity="error" color="error" sx={{ width: "100%" }}>
@@ -102,10 +109,16 @@ const ResetPassword = ({ currentTheme }) => {
             <img src={blueLogo} alt="" height={150} width={150} />
           </Stack>
 
-          <Typography fontSize={20} fontWeight="bolder">
-            Reset Password
+          <Typography
+            fontSize={20}
+            fontWeight="bolder"
+            sx={{ color: "primary.main" }}
+          >
+            Hi, Reset Password
           </Typography>
-          <Typography fontWeight="bolder" sx={{ color: "primary.main" }}>
+          <Typography
+            sx={{ color: "#85929e", letterSpacing: 0.5, fontWeight: "bolder" }}
+          >
             Change your password
           </Typography>
 
