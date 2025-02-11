@@ -175,6 +175,12 @@ const ApiQueries = {
     return resp?.data;
   },
 
+  deleteDocument: async (id) => {
+    const resp = await axiosInstance.delete(`/student/deleteDocument/${id}`);
+
+    return resp?.data;
+  },
+
   getAllProgrammes: async () => {
     const resp = await axiosInstance.get(`/student/getAllProgrammes`);
 
