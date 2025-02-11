@@ -20,6 +20,7 @@ import {
 // import { useNavigate, useParams } from "react-router-dom";
 // import AlertPopup from "../../components/AlertPopup";
 import blueLogo from "../../images/blueLogo-transparentBg.png";
+import whiteLogo from "../../images/whiteLogo-bgwhite.png";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import TextFieldWrapper from "../../components/form-components/TextFieldWrapper";
@@ -106,7 +107,12 @@ const ResetPassword = ({ currentTheme }) => {
           )}
 
           <Stack height={150} alignItems="center" padding={2}>
-            <img src={blueLogo} alt="" height={150} width={150} />
+            <img
+              src={theme.palette.mode === "dark" ? whiteLogo : blueLogo}
+              alt=""
+              height={150}
+              width={150}
+            />
           </Stack>
 
           <Typography
