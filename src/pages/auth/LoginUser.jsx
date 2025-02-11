@@ -3,12 +3,16 @@ import {
   Backdrop,
   Button,
   CircularProgress,
+  Divider,
   Grid,
   InputLabel,
   // LinearProgress,
   Link,
+  Paper,
   Stack,
-  Typography
+  Typography,
+  useMediaQuery,
+  useTheme
 } from "@mui/material";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
@@ -18,13 +22,16 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import ApiQueries from "../../apiQuries";
 // import bgImg from "../../images/Untitled-2.bcecf2a1201a8f598c47.png";
-import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
+// import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import LoginIcon from "@mui/icons-material/Login";
 import blueLogo from "../../images/blueLogo-transparentBg.png";
 import FASSET_POLICY from "../../images/FASSET POPIA POLICY.pdf";
+
 const LoginUser = () => {
   const navigate = useNavigate();
   const [openBackDrop, setOpenBackDrop] = useState(false);
+  const theme = useTheme();
+  const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
 
   const { mutate, error, isSuccess, isLoading, data } = useMutation({
     mutationFn: (formData) => {
@@ -75,22 +82,23 @@ const LoginUser = () => {
       direction="row"
       justifyContent="center"
       alignItems="center"
-      mt={8.5}
+      mt={10}
       minHeight="90vh"
       // border={1}
     >
       <Stack
-        width={{ md: "50%", xs: "100%" }}
+        width={{ md: "30%", xs: "100%" }}
         // spacing={2}
         alignItems="center"
         // minHeight="86vh"
         justifyContent="center"
         paddingX={{ md: 5, xs: 4 }}
-        py={{ md: 10, xs: 2 }}
-        border={{ md: 1 }}
-        borderColor={{ md: "lightgray" }}
+        py={{ md: 4, xs: 2 }}
+        // border={{ md: 1 }}
+        // borderColor={{ md: "lightgray" }}
         // component={{ md: Paper, Stack}}
         sx={{ backgroundColor: "#FFFFFF" }}
+        component={isMdUp ? Paper : "div"}
       >
         {error?.response?.status === 404 && (
           <Alert severity="error" color="error" sx={{ width: "100%" }}>
@@ -107,10 +115,16 @@ const LoginUser = () => {
           <img src={blueLogo} alt="" height={150} width={150} />
         </Stack>
 
-        <Typography fontSize={20} fontWeight="bolder">
-          Welcome back
+        <Typography
+          fontSize={20}
+          fontWeight="bolder"
+          sx={{ color: "primary.main" }}
+        >
+          Hi, Welcome back
         </Typography>
-        <Typography fontWeight="bolder" sx={{ color: "primary.main" }}>
+        <Typography
+          sx={{ color: "#85929e", letterSpacing: 0.5, fontWeight: "bolder" }}
+        >
           Login in to continue to Learner Portal
         </Typography>
 
@@ -213,7 +227,26 @@ const LoginUser = () => {
                           Login
                         </Button>
                       </Grid>
-
+                      <Grid item xs={12} md={12}>
+                        <Divider />
+                      </Grid>
+                      <Grid item xs={12} md={12}>
+                        <Typography
+                          sx={{
+                            textAlign: "center",
+                            fontSize: 15,
+                            fontWeight: "bold",
+                            cursor: "pointer",
+                            color: "primary.main"
+                          }}
+                          onClick={() => {
+                            navigate("/register");
+                          }}
+                        >
+                          Don't have an account?
+                        </Typography>
+                      </Grid>
+                      {/* 
                       <Grid item xs={12} md={6}>
                         <Button
                           variant="outlined"
@@ -240,7 +273,7 @@ const LoginUser = () => {
                         >
                           View Career Guide
                         </Button>
-                      </Grid>
+                      </Grid> */}
                       <Backdrop
                         sx={{
                           color: "#fff",

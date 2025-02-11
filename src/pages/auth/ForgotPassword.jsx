@@ -4,8 +4,11 @@ import {
   CircularProgress,
   Grid,
   InputLabel,
+  Paper,
   Stack,
-  Typography
+  Typography,
+  useMediaQuery,
+  useTheme
 } from "@mui/material";
 import React from "react";
 import blueLogo from "../../images/blueLogo-transparentBg.png";
@@ -16,6 +19,9 @@ import { useMutation } from "@tanstack/react-query";
 import ApiQueries from "../../apiQuries";
 
 const ForgotPassword = ({ currentTheme }) => {
+  const theme = useTheme();
+  const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
+
   const { data, mutate, error, isSuccess, isError, isLoading } = useMutation({
     mutationFn: (formData) => {
       return ApiQueries.sendResetPasswordEmail(formData);
@@ -28,22 +34,23 @@ const ForgotPassword = ({ currentTheme }) => {
       direction="row"
       justifyContent="center"
       alignItems="center"
-      mt={8.5}
+      mt={10}
       minHeight="90vh"
       // border={1}
     >
       <Stack
-        width={{ md: "50%", xs: "100%" }}
+        width={{ md: "30%", xs: "100%" }}
         // spacing={2}
         alignItems="center"
         // minHeight="86vh"
         justifyContent="center"
         paddingX={{ md: 5, xs: 4 }}
-        py={{ md: 10, xs: 2 }}
-        border={{ md: 1 }}
-        borderColor={{ md: "lightgray" }}
+        py={{ md: 4, xs: 2 }}
+        // border={{ md: 1 }}
+        // borderColor={{ md: "lightgray" }}
         // component={{ md: Paper, Stack}}
         sx={{ backgroundColor: "#FFFFFF" }}
+        component={isMdUp ? Paper : "div"}
       >
         {isError && (
           <Alert severity="error" color="error" sx={{ width: "100%" }}>
@@ -56,14 +63,20 @@ const ForgotPassword = ({ currentTheme }) => {
           </Alert>
         )}
 
-        <Stack height={150} alignItems="center" padding={2}>
+        <Stack height={150} alignItems="center" padding={2} mb={2}>
           <img src={blueLogo} alt="" height={150} width={150} />
         </Stack>
 
-        <Typography fontSize={20} fontWeight="bolder">
-          Forgot Password
+        <Typography
+          fontSize={20}
+          fontWeight="bolder"
+          sx={{ color: "primary.main" }}
+        >
+          Hi, Forgot Password Your Password?
         </Typography>
-        <Typography fontWeight="bolder" sx={{ color: "primary.main" }}>
+        <Typography
+          sx={{ color: "#85929e", letterSpacing: 0.5, fontWeight: "bolder" }}
+        >
           Enter your email to reset your password
         </Typography>
 
