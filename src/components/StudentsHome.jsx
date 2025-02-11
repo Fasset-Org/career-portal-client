@@ -207,7 +207,7 @@ const StudentsHome = () => {
                 {data?.studentAddress ? (
                   <Typography>
                     {`${data?.studentAddress?.streetNumber}, ${data?.studentAddress?.streetName}, ${data?.studentAddress?.suburb},
-${data?.studentAddress?.city}, ${data?.studentAddress?.province}, ${data?.studentAddress?.postalCode} ${data?.studentAddress?.manicipality}`}
+${data?.studentAddress?.city}, ${data?.studentAddress?.province}, ${data?.studentAddress?.postalCode}, ${data?.studentAddress?.manicipality}`}
                   </Typography>
                 ) : (
                   <Typography color="red" fontSize={10} textAlign="center">
