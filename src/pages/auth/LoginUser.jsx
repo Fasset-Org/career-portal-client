@@ -21,13 +21,12 @@ import TextFieldWrapper from "../../components/form-components/TextFieldWrapper"
 import { Navigate, useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import ApiQueries from "../../apiQuries";
-// import bgImg from "../../images/Untitled-2.bcecf2a1201a8f598c47.png";
-// import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import LoginIcon from "@mui/icons-material/Login";
 import blueLogo from "../../images/blueLogo-transparentBg.png";
+import whiteLogo from "../../images/whiteLogo-bgwhite.png";
 import FASSET_POLICY from "../../images/FASSET POPIA POLICY.pdf";
 
-const LoginUser = () => {
+const LoginUser = ({ currentTheme }) => {
   const navigate = useNavigate();
   const [openBackDrop, setOpenBackDrop] = useState(false);
   const theme = useTheme();
@@ -39,7 +38,6 @@ const LoginUser = () => {
 
       return data;
     },
-
     onSuccess: (data) => {
       setOpenBackDrop(false);
       localStorage.setItem("token", data.user.token);
@@ -84,20 +82,13 @@ const LoginUser = () => {
       alignItems="center"
       mt={10}
       minHeight="90vh"
-      // border={1}
     >
       <Stack
         width={{ md: "30%", xs: "100%" }}
-        // spacing={2}
         alignItems="center"
-        // minHeight="86vh"
         justifyContent="center"
         paddingX={{ md: 5, xs: 4 }}
         py={{ md: 4, xs: 2 }}
-        // border={{ md: 1 }}
-        // borderColor={{ md: "lightgray" }}
-        // component={{ md: Paper, Stack}}
-        sx={{ backgroundColor: "#FFFFFF" }}
         component={isMdUp ? Paper : "div"}
       >
         {error?.response?.status === 404 && (
@@ -111,9 +102,12 @@ const LoginUser = () => {
           </Alert>
         )}
 
-        <Stack height={150} alignItems="center" padding={2}>
-          <img src={blueLogo} alt="" height={150} width={150} />
-        </Stack>
+        <img
+          src={theme.palette.mode === "dark" ? whiteLogo : blueLogo}
+          alt=""
+          height={150}
+          width={150}
+        />
 
         <Typography
           fontSize={20}
@@ -198,18 +192,19 @@ const LoginUser = () => {
                           By loging in and completing your profile, you agree
                           that you have read,understood and accepted that you
                           will be bounded by the terms of use of the{" "}
-                          <a
+                          <Link
                             href={FASSET_POLICY}
-                            style={{
-                              color: "#163683",
-                              cursor: "pointer",
-                              fontWeight: 600
-                            }}
                             target="_blank"
                             rel="noreferrer"
+                            sx={{
+                              color: "primary.main",
+                              cursor: "pointer",
+                              fontWeight: 600,
+                              textDecoration: "none"
+                            }}
                           >
                             POPI Act No.4 2013.
-                          </a>{" "}
+                          </Link>{" "}
                           FASSET endeavours to take all reasonable precautions
                           to ensure that any information provided, is only used
                           for the purposes it has been provided.
