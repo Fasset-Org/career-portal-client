@@ -23,6 +23,7 @@ import Modules from "./components/admin/user-management/Modules";
 import AdminLearnerProgrammes from "./components/admin/activities/AdminLearnerProgrammes";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import ResetPassword from "./pages/auth/ResetPassword";
+import Policy from "./pages/Policy";
 
 function App() {
   const [themeMode, setThemeMode] = useState(true);
@@ -51,6 +52,7 @@ function App() {
                 path="/resetPassword/:resetToken"
                 element={<ResetPassword />}
               />
+              <Route path="/policy" element={<Policy />} />
 
               <Route path="/" element={<PrivateRoute />}>
                 {/* Learner Routes */}
