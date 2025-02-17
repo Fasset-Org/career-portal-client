@@ -24,6 +24,7 @@ import AdminLearnerProgrammes from "./components/admin/activities/AdminLearnerPr
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import ResetPassword from "./pages/auth/ResetPassword";
 import Policy from "./pages/Policy";
+import AccountDeleteGuide from "./pages/AccountDeleteGuide";
 
 function App() {
   const [themeMode, setThemeMode] = useState(true);
@@ -53,6 +54,10 @@ function App() {
                 element={<ResetPassword />}
               />
               <Route path="/policy" element={<Policy />} />
+              <Route
+                path="/accountDeteleGuide"
+                element={<AccountDeleteGuide />}
+              />
 
               <Route path="/" element={<PrivateRoute />}>
                 {/* Learner Routes */}

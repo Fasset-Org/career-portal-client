@@ -24,14 +24,24 @@ const Policy = () => {
   ];
 
   return (
-    <Stack spacing={2} mt={8.5} paddingX={20} paddingY={4} alignItems="center">
+    <Stack
+      spacing={2}
+      mt={8.5}
+      paddingX={{ xs: 2, md: 20 }}
+      paddingY={4}
+      alignItems="center"
+    >
       <img
         src={theme.palette.mode === "dark" ? whiteLogo : blueLogo}
         alt=""
         height={150}
         width={150}
       />
-      <Typography fontWeight="bolder" fontSize={30} textAlign="center">
+      <Typography
+        fontWeight="bolder"
+        fontSize={{ xs: 15, md: 30 }}
+        textAlign="center"
+      >
         CONSENT TO PROCESS PERSONAL INFORMATION IN TERMS OF THE PROTECTION OF
         INFORMATION ACT, 4 OF 2013 (POPI){" "}
       </Typography>
@@ -39,7 +49,13 @@ const Policy = () => {
       <Stack>
         {popi.map((p, i) => {
           return (
-            <List sx={{ width: "80%", margin: "auto", border: 1 }}>
+            <List
+              sx={{
+                width: { xs: "100%", md: "80%" },
+                margin: "auto",
+                border: 1
+              }}
+            >
               <ListItem>
                 <Typography fontWeight="bolder">
                   {i + 1 + "."}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
